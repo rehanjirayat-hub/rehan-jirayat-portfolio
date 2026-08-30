@@ -34,6 +34,8 @@ export function Navbar() {
               href={item.href}
               key={item.href}
               aria-current={item.href === '#home' ? 'page' : undefined}
+              target={item.isExternal ? '_blank' : undefined}
+              rel={item.isExternal ? 'noopener noreferrer' : undefined}
             >
               {item.label}
             </a>
@@ -70,6 +72,8 @@ export function Navbar() {
                   href={item.href}
                   key={item.href}
                   onClick={() => setIsMenuOpen(false)}
+                  target={item.isExternal ? '_blank' : undefined}
+                  rel={item.isExternal ? 'noopener noreferrer' : undefined}
                 >
                   {item.label}
                 </a>

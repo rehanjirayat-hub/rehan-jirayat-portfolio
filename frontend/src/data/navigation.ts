@@ -7,7 +7,7 @@ export const navigationItems: NavigationItem[] = [
   { label: 'Projects', href: '#projects' },
   { label: 'Education', href: '#education' },
   { label: 'Certifications', href: '#certifications' },
-  { label: 'GitHub', href: '#github' },
+  { label: 'GitHub', href: 'https://github.com/rehanjirayat-hub', isExternal: true },
   { label: 'Resume', href: '#resume' },
   { label: 'Contact', href: '#contact' },
 ]
