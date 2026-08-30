@@ -11,8 +11,8 @@ export function App() {
     <PublicLayout>
       <HomePage />
       <AboutSection />
-      <ProjectsSection />
       <SkillsSection />
+      <ProjectsSection />
       <EducationSection />
       <ContactSection />
     </PublicLayout>

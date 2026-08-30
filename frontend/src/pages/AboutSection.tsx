@@ -1,7 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Container } from '../components/common/Container'
-import { EducationPreview } from '../components/common/EducationPreview'
 import { LearningJourney } from '../components/common/LearningJourney'
 import { ButtonLink } from '../components/ui/Button'
 import { profile } from '../data/profile'
@@ -43,7 +42,6 @@ export function AboutSection() {
           </motion.div>
           <LearningJourney />
         </div>
-        <EducationPreview />
       </Container>
     </section>
   )

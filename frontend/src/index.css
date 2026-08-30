@@ -31,6 +31,18 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Scroll margin for navigation anchors to account for sticky header */
+#home,
+#about,
+#skills,
+#projects,
+#education,
+#certifications,
+#resume,
+#contact {
+  scroll-margin-top: 5rem;
+}
+
 body {
   min-width: 320px;
   min-height: 100vh;
