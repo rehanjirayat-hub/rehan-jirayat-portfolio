@@ -17,7 +17,7 @@ export function HomePage() {
           animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          <p className="eyebrow">JAVA • SPRING BOOT • BACKEND DEVELOPMENT</p>
+          <p className="eyebrow">JAVA {'\u2022'} SPRING BOOT {'\u2022'} BACKEND DEVELOPMENT</p>
           <h1 id="hero-title">Hi, I&apos;m {profile.name}.</h1>
           <p className="hero-role">{profile.role}</p>
           <p className="hero-description">{profile.heroStatement}</p>
