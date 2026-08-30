@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { navigationItems } from '../../data/navigation'
+import { profile } from '../../data/profile'
 import { classNames } from '../../utils/classNames'
 import { Container } from '../common/Container'
 
@@ -22,7 +23,7 @@ export function Navbar() {
   return (
     <header className="site-header">
       <Container className="site-header-inner">
-        <a className="brand-mark" href="#home" aria-label="Mohammad Rehan Jirayat home">
+        <a className="brand-mark" href="#home" aria-label={`${profile.name} home`}>
           MRJ
         </a>
 

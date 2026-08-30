@@ -1,11 +1,14 @@
-import type { ButtonHTMLAttributes, PropsWithChildren } from 'react'
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, PropsWithChildren } from 'react'
 import { classNames } from '../../utils/classNames'
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost'
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonBaseProps {
   variant?: ButtonVariant
 }
+
+type ButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement> & ButtonBaseProps>
+type ButtonLinkProps = PropsWithChildren<AnchorHTMLAttributes<HTMLAnchorElement> & ButtonBaseProps>
 
 export function Button({
   children,
@@ -13,10 +16,18 @@ export function Button({
   type = 'button',
   variant = 'primary',
   ...props
-}: PropsWithChildren<ButtonProps>) {
+}: ButtonProps) {
   return (
     <button className={classNames('button', `button-${variant}`, className)} type={type} {...props}>
       {children}
     </button>
+  )
+}
+
+export function ButtonLink({ children, className, variant = 'primary', ...props }: ButtonLinkProps) {
+  return (
+    <a className={classNames('button', `button-${variant}`, className)} {...props}>
+      {children}
+    </a>
   )
 }

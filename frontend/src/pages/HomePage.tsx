@@ -1,55 +1,46 @@
-import { motion } from 'framer-motion'
-import { Badge } from '../components/ui/Badge'
-import { Card } from '../components/ui/Card'
+import { motion, useReducedMotion } from 'framer-motion'
 import { Container } from '../components/common/Container'
-
-const focusAreas = ['Java', 'Spring Boot', 'Backend Engineering']
+import { BackendVisual } from '../components/common/BackendVisual'
+import { SocialLinks } from '../components/common/SocialLinks'
+import { Button, ButtonLink } from '../components/ui/Button'
+import { profile } from '../data/profile'
 
 export function HomePage() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section id="home" className="hero-section" aria-labelledby="hero-title">
       <Container className="hero-grid">
         <motion.div
           className="hero-copy"
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: 'easeOut' }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+          animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          <p className="eyebrow">Portfolio</p>
-          <h1 id="hero-title">Mohammad Rehan Jirayat</h1>
-          <p className="hero-role">Java Spring Boot Developer</p>
-          <div className="hero-tags" aria-label="Professional focus">
-            {focusAreas.map((area) => (
-              <Badge key={area}>{area}</Badge>
-            ))}
+          <p className="eyebrow">JAVA • SPRING BOOT • BACKEND DEVELOPMENT</p>
+          <h1 id="hero-title">Hi, I&apos;m {profile.name}.</h1>
+          <p className="hero-role">{profile.role}</p>
+          <p className="hero-description">{profile.heroStatement}</p>
+          <p className="hero-location">{profile.location}</p>
+          <div className="hero-actions">
+            <motion.div
+              whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+              whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+            >
+              <ButtonLink href="#projects">View Projects</ButtonLink>
+            </motion.div>
+            <motion.div
+              whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+              whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+            >
+              <Button variant="secondary" disabled title="Resume will be available soon">
+                Download Resume
+              </Button>
+            </motion.div>
           </div>
+          <SocialLinks />
         </motion.div>
-
-        <motion.div
-          className="hero-visual"
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.08, ease: 'easeOut' }}
-          aria-hidden="true"
-        >
-          <Card className="architecture-card">
-            <div className="architecture-card-header">
-              <span className="status-dot" />
-              <span>backend</span>
-            </div>
-            <div className="architecture-lines">
-              <span />
-              <span />
-              <span />
-            </div>
-            <div className="architecture-grid">
-              <span />
-              <span />
-              <span />
-              <span />
-            </div>
-          </Card>
-        </motion.div>
+        <BackendVisual />
       </Container>
     </section>
   )
