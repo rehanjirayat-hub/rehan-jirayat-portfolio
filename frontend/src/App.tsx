@@ -4,6 +4,7 @@ import { HomePage } from './pages/HomePage'
 import { ProjectsSection } from './pages/ProjectsSection'
 import { SkillsSection } from './pages/SkillsSection'
 import { EducationSection } from './pages/EducationSection'
+import { ContactSection } from './pages/ContactPage'
 
 export function App() {
   return (
@@ -13,6 +14,7 @@ export function App() {
       <ProjectsSection />
       <SkillsSection />
       <EducationSection />
+      <ContactSection />
     </PublicLayout>
   )
 }
