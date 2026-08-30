@@ -32,3 +32,12 @@ mvn spring-boot:run
 ```
 
 The frontend and backend currently contain bootstrap code only. Portfolio pages, APIs, authentication, and database setup are intentionally deferred.
+
+## Frontend organization
+
+- `src/components/` - reusable common, layout, and UI primitives
+- `src/data/` - static, verified navigation metadata
+- `src/layouts/` - page-level layout composition
+- `src/pages/` - route-ready page components
+- `src/services/` - HTTP client configuration, with no endpoints implemented
+- `src/types/` and `src/utils/` - shared TypeScript contracts and helpers
