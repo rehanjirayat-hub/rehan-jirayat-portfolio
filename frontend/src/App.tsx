@@ -3,6 +3,7 @@ import { AboutSection } from './pages/AboutSection'
 import { HomePage } from './pages/HomePage'
 import { ProjectsSection } from './pages/ProjectsSection'
 import { SkillsSection } from './pages/SkillsSection'
+import { EducationSection } from './pages/EducationSection'
 
 export function App() {
   return (
@@ -11,6 +12,7 @@ export function App() {
       <AboutSection />
       <ProjectsSection />
       <SkillsSection />
+      <EducationSection />
     </PublicLayout>
   )
 }
