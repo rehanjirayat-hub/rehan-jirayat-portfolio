@@ -1,13 +1,7 @@
 package com.rehanjirayat.portfolio.config;
 
-import com.rehanjirayat.portfolio.domain.Profile;
-import com.rehanjirayat.portfolio.domain.Project;
-import com.rehanjirayat.portfolio.domain.ProjectTechnology;
-import com.rehanjirayat.portfolio.domain.SocialLink;
-import com.rehanjirayat.portfolio.domain.TechnologyCategory;
-import com.rehanjirayat.portfolio.repository.CertificationRepository;
-import com.rehanjirayat.portfolio.repository.ProfileRepository;
-import com.rehanjirayat.portfolio.repository.ProjectRepository;
+import com.rehanjirayat.portfolio.domain.*;
+import com.rehanjirayat.portfolio.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -23,13 +17,16 @@ public class DataSeeder implements CommandLineRunner {
     private final ProjectRepository projectRepository;
     private final CertificationRepository certificationRepository;
     private final ProfileRepository profileRepository;
+    private final SkillCategoryRepository skillCategoryRepository;
 
     public DataSeeder(ProjectRepository projectRepository,
                      CertificationRepository certificationRepository,
-                     ProfileRepository profileRepository) {
+                     ProfileRepository profileRepository,
+                     SkillCategoryRepository skillCategoryRepository) {
         this.projectRepository = projectRepository;
         this.certificationRepository = certificationRepository;
         this.profileRepository = profileRepository;
+        this.skillCategoryRepository = skillCategoryRepository;
     }
 
     @Override
@@ -52,6 +49,13 @@ public class DataSeeder implements CommandLineRunner {
             log.info("Seed data loaded: profile");
         } else {
             log.info("Profiles table already has {} rows — skipping seed", profileRepository.count());
+        }
+
+        if (skillCategoryRepository.count() == 0) {
+            seedSkills();
+            log.info("Seed data loaded: {} skill categories", skillCategoryRepository.count());
+        } else {
+            log.info("Skill categories table already has {} rows — skipping seed", skillCategoryRepository.count());
         }
     }
 
@@ -117,5 +121,64 @@ public class DataSeeder implements CommandLineRunner {
                 new SocialLink("email", "mailto:rehanjirayat@gmail.com", "Email Mohammad Rehan Jirayat")
         ));
         profileRepository.save(profile);
+    }
+
+    private void seedSkills() {
+        SkillCategory javaBackend = new SkillCategory(
+                "java-backend", "Java & Backend",
+                "Core Java and backend application foundations", SkillEmphasis.primary);
+        javaBackend.getSkills().addAll(List.of(
+                "Core Java", "OOP", "Collections", "Exception Handling",
+                "Multithreading", "DSA", "JDBC", "Servlets", "JSP",
+                "REST APIs", "Logging", "Spring AI"));
+        skillCategoryRepository.save(javaBackend);
+
+        SkillCategory spring = new SkillCategory(
+                "spring-ecosystem", "Spring Ecosystem",
+                "Frameworks, APIs, and security for backend development", SkillEmphasis.primary);
+        spring.getSkills().addAll(List.of(
+                "Spring Framework", "Spring Boot", "Spring MVC", "Spring Data JPA",
+                "Hibernate", "Spring Security", "JWT", "OAuth2"));
+        skillCategoryRepository.save(spring);
+
+        SkillCategory database = new SkillCategory(
+                "database", "Database",
+                "Persistent data and SQL fundamentals", SkillEmphasis.secondary);
+        database.getSkills().addAll(List.of("MySQL", "SQL"));
+        skillCategoryRepository.save(database);
+
+        SkillCategory architecture = new SkillCategory(
+                "architecture", "Architecture",
+                "Layered and service-oriented backend design", SkillEmphasis.secondary);
+        architecture.getSkills().addAll(List.of(
+                "Layered Architecture", "MVC (Model-View-Controller)", "Microservices"));
+        skillCategoryRepository.save(architecture);
+
+        SkillCategory testingTools = new SkillCategory(
+                "testing-tools", "Testing & Development Tools",
+                "Build, test, and API validation workflows", SkillEmphasis.secondary);
+        testingTools.getSkills().addAll(List.of(
+                "Maven", "Gradle", "JUnit 5", "Mockito", "Git", "GitHub", "Postman"));
+        skillCategoryRepository.save(testingTools);
+
+        SkillCategory ides = new SkillCategory(
+                "ides", "IDEs",
+                "Core development environments", SkillEmphasis.supporting);
+        ides.getSkills().addAll(List.of("IntelliJ IDEA", "Eclipse", "Visual Studio Code"));
+        skillCategoryRepository.save(ides);
+
+        SkillCategory devops = new SkillCategory(
+                "devops-cloud", "DevOps & Cloud",
+                "Deployment and operational support", SkillEmphasis.supporting);
+        devops.getSkills().addAll(List.of(
+                "Docker", "Cloud Deployment", "Linux", "Ansible", "Jenkins", "Terraform"));
+        skillCategoryRepository.save(devops);
+
+        SkillCategory frontend = new SkillCategory(
+                "frontend", "Supporting Frontend",
+                "Supporting UI and web foundation technologies", SkillEmphasis.supporting);
+        frontend.getSkills().addAll(List.of(
+                "React", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS"));
+        skillCategoryRepository.save(frontend);
     }
 }
