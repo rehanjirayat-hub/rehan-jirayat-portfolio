@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!--
+    TODO: Replace "https://YOUR_DOMAIN.com" with your actual production domain.
+    This is a placeholder — update it before deploying to production.
+  -->
+  <url>
+    <loc>https://YOUR_DOMAIN.com</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

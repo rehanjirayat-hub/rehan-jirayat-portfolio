@@ -5,16 +5,26 @@ import { ProjectsSection } from './pages/ProjectsSection'
 import { SkillsSection } from './pages/SkillsSection'
 import { EducationSection } from './pages/EducationSection'
 import { ContactSection } from './pages/ContactPage'
+import { NotFoundPage } from './pages/NotFoundPage'
+
+/** Only the root path is a valid route for this single-page portfolio. */
+function isValidRoute(pathname: string): boolean {
+  return pathname === '/' || pathname === ''
+}
 
 export function App() {
-  return (
-    <PublicLayout>
+  const content = isValidRoute(window.location.pathname) ? (
+    <>
       <HomePage />
       <AboutSection />
       <SkillsSection />
       <ProjectsSection />
       <EducationSection />
       <ContactSection />
-    </PublicLayout>
+    </>
+  ) : (
+    <NotFoundPage />
   )
+
+  return <PublicLayout>{content}</PublicLayout>
 }

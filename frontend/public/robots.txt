@@ -1,0 +1,6 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# TODO: Uncomment and replace with your actual production domain
+# Sitemap: https://YOUR_DOMAIN.com/sitemap.xml
