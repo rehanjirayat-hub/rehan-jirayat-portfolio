@@ -2,11 +2,12 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { navigationItems } from '../../data/navigation'
-import { profile } from '../../data/profile'
+import { useProfile } from '../../hooks/useProfile'
 import { classNames } from '../../utils/classNames'
 import { Container } from '../common/Container'
 
 export function Navbar() {
+  const { profile } = useProfile()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export function Navbar() {
   return (
     <header className="site-header">
       <Container className="site-header-inner">
-        <a className="brand-mark" href="#home" aria-label={`${profile.name} home`}>
+        <a className="brand-mark" href="#home" aria-label={profile ? `${profile.name} home` : 'Home'}>
           MRJ
         </a>
 

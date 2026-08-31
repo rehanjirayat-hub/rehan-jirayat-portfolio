@@ -3,10 +3,13 @@ import { Container } from '../components/common/Container'
 import { BackendVisual } from '../components/common/BackendVisual'
 import { SocialLinks } from '../components/common/SocialLinks'
 import { Button, ButtonLink } from '../components/ui/Button'
-import { profile } from '../data/profile'
+import { useProfile } from '../hooks/useProfile'
 
 export function HomePage() {
+  const { profile } = useProfile()
   const shouldReduceMotion = useReducedMotion()
+
+  if (!profile) return null
 
   return (
     <section id="home" className="hero-section" aria-labelledby="hero-title">

@@ -3,10 +3,13 @@ import { ArrowRight } from 'lucide-react'
 import { Container } from '../components/common/Container'
 import { LearningJourney } from '../components/common/LearningJourney'
 import { ButtonLink } from '../components/ui/Button'
-import { profile } from '../data/profile'
+import { useProfile } from '../hooks/useProfile'
 
 export function AboutSection() {
+  const { profile } = useProfile()
   const shouldReduceMotion = useReducedMotion()
+
+  if (!profile) return null
 
   return (
     <section id="about" className="about-section" aria-labelledby="about-title">
