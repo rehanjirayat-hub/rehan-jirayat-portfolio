@@ -16,3 +16,17 @@ backend/target/
 *.iml
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Maven
+*.jar
+*.war
+*.ear
+
+# Database
+*.sql
+*.db
+*.sqlite
