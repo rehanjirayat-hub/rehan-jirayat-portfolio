@@ -18,15 +18,18 @@ public class DataSeeder implements CommandLineRunner {
     private final CertificationRepository certificationRepository;
     private final ProfileRepository profileRepository;
     private final SkillCategoryRepository skillCategoryRepository;
+    private final EducationRepository educationRepository;
 
     public DataSeeder(ProjectRepository projectRepository,
                      CertificationRepository certificationRepository,
                      ProfileRepository profileRepository,
-                     SkillCategoryRepository skillCategoryRepository) {
+                     SkillCategoryRepository skillCategoryRepository,
+                     EducationRepository educationRepository) {
         this.projectRepository = projectRepository;
         this.certificationRepository = certificationRepository;
         this.profileRepository = profileRepository;
         this.skillCategoryRepository = skillCategoryRepository;
+        this.educationRepository = educationRepository;
     }
 
     @Override
@@ -56,6 +59,13 @@ public class DataSeeder implements CommandLineRunner {
             log.info("Seed data loaded: {} skill categories", skillCategoryRepository.count());
         } else {
             log.info("Skill categories table already has {} rows — skipping seed", skillCategoryRepository.count());
+        }
+
+        if (educationRepository.count() == 0) {
+            seedEducation();
+            log.info("Seed data loaded: {} education records", educationRepository.count());
+        } else {
+            log.info("Education table already has {} rows — skipping seed", educationRepository.count());
         }
     }
 
@@ -121,6 +131,38 @@ public class DataSeeder implements CommandLineRunner {
                 new SocialLink("email", "mailto:rehanjirayat@gmail.com", "Email Mohammad Rehan Jirayat")
         ));
         profileRepository.save(profile);
+    }
+
+    private void seedEducation() {
+        Education mca = new Education(
+                "mca-vtu",
+                "Master of Computer Applications (MCA)",
+                "Visvesvaraya Technological University (VTU)",
+                null,
+                "Jnana Sangama, Belagavi, Karnataka, India",
+                2025,
+                2027,
+                2027,
+                "currently-pursuing",
+                69,
+                "https://vtu.ac.in/"
+        );
+        educationRepository.save(mca);
+
+        Education bca = new Education(
+                "bca-bharatesh",
+                "Bachelor of Computer Applications (BCA)",
+                "Bharatesh College of Computer Applications",
+                "Rani Channamma University (RCU)",
+                "Belagavi, Karnataka, India",
+                2022,
+                2025,
+                null,
+                "completed",
+                66,
+                "https://www.bharateshcollege.org/"
+        );
+        educationRepository.save(bca);
     }
 
     private void seedSkills() {
