@@ -1,14 +1,16 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
+import { Loader2, AlertCircle } from 'lucide-react'
 import { Container } from '../components/common/Container'
 import { SectionHeading } from '../components/common/SectionHeading'
 import { EducationCard } from '../components/common/EducationCard'
 import { CertificationsSection } from '../components/common/CertificationsSection'
-import { educationData } from '../data/education'
+import { useEducation } from '../hooks/useEducation'
 
 export function EducationSection() {
   const shouldReduceMotion = useReducedMotion()
+  const { education: educationData, isLoading, error } = useEducation()
 
   return (
     <section id="education" className="education-section" aria-labelledby="education-heading">
@@ -28,16 +30,38 @@ export function EducationSection() {
           />
         </motion.div>
 
-        <div className="education-timeline">
-          {educationData.map((education, index) => (
-            <EducationCard
-              key={education.id}
-              education={education}
-              index={index}
-              isLatest={index === 0}
-            />
-          ))}
-        </div>
+        {isLoading && (
+          <div className="education-status" role="status">
+            <Loader2 size={24} className="education-spinner" aria-hidden="true" />
+            <p>Loading education...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="education-status education-error" role="alert">
+            <AlertCircle size={24} aria-hidden="true" />
+            <p>{error}</p>
+          </div>
+        )}
+
+        {!isLoading && !error && educationData.length === 0 && (
+          <div className="education-empty" role="status">
+            <p>No education records found.</p>
+          </div>
+        )}
+
+        {!isLoading && !error && educationData.length > 0 && (
+          <div className="education-timeline">
+            {educationData.map((education, index) => (
+              <EducationCard
+                key={education.id}
+                education={education}
+                index={index}
+                isLatest={index === 0}
+              />
+            ))}
+          </div>
+        )}
       </Container>
 
       {/* Certifications Section */}
