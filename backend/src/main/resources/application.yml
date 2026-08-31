@@ -30,3 +30,8 @@ server:
 
 contact:
   notification-email: ${CONTACT_NOTIFICATION_EMAIL:}
+
+rate-limit:
+  max-requests: ${RATE_LIMIT_MAX_REQUESTS:5}
+  window-minutes: ${RATE_LIMIT_WINDOW_MINUTES:15}
+  trust-proxy-headers: ${RATE_LIMIT_TRUST_PROXY_HEADERS:false}
