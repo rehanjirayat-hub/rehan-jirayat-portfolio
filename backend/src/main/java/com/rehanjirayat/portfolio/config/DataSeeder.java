@@ -3,6 +3,7 @@ package com.rehanjirayat.portfolio.config;
 import com.rehanjirayat.portfolio.domain.Project;
 import com.rehanjirayat.portfolio.domain.ProjectTechnology;
 import com.rehanjirayat.portfolio.domain.TechnologyCategory;
+import com.rehanjirayat.portfolio.repository.CertificationRepository;
 import com.rehanjirayat.portfolio.repository.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +18,12 @@ public class DataSeeder implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(DataSeeder.class);
 
     private final ProjectRepository projectRepository;
+    private final CertificationRepository certificationRepository;
 
-    public DataSeeder(ProjectRepository projectRepository) {
+    public DataSeeder(ProjectRepository projectRepository,
+                     CertificationRepository certificationRepository) {
         this.projectRepository = projectRepository;
+        this.certificationRepository = certificationRepository;
     }
 
     @Override
@@ -29,6 +33,12 @@ public class DataSeeder implements CommandLineRunner {
             log.info("Seed data loaded: {} projects", projectRepository.count());
         } else {
             log.info("Projects table already has {} rows — skipping seed", projectRepository.count());
+        }
+
+        if (certificationRepository.count() == 0) {
+            log.info("Certifications table is empty — no seed data available");
+        } else {
+            log.info("Certifications table already has {} rows — skipping seed", certificationRepository.count());
         }
     }
 
