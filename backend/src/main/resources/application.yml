@@ -3,13 +3,13 @@ spring:
     name: portfolio-api
 
   datasource:
-    url: jdbc:mysql://localhost:3306/rehan_portfolio
+    url: jdbc:mysql://localhost:3306/rehan_portfolio?allowPublicKeyRetrieval=true&useSSL=false&defaultAuthenticationPlugin=mysql_native_password
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:}
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
     open-in-view: false
 
