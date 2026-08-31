@@ -1,15 +1,47 @@
+import { AlertCircle, Loader2 } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Container } from '../components/common/Container'
 import { BackendVisual } from '../components/common/BackendVisual'
 import { SocialLinks } from '../components/common/SocialLinks'
-import { Button, ButtonLink } from '../components/ui/Button'
+import { ButtonLink } from '../components/ui/Button'
 import { useProfile } from '../hooks/useProfile'
 
+const RESUME_PATH = '/resume/Mohammad_Rehan_Jirayat_Resume.pdf'
+const RESUME_FILENAME = 'Mohammad_Rehan_Jirayat_Resume.pdf'
+
 export function HomePage() {
-  const { profile } = useProfile()
+  const { profile, isLoading, error } = useProfile()
   const shouldReduceMotion = useReducedMotion()
 
-  if (!profile) return null
+  if (isLoading) {
+    return (
+      <section id="home" className="hero-section" aria-labelledby="hero-title">
+        <Container className="hero-grid" style={{ justifyItems: 'center', textAlign: 'center' }}>
+          <div className="hero-copy" style={{ maxWidth: '40rem' }}>
+            <div className="projects-status" role="status">
+              <Loader2 size={24} className="projects-spinner" aria-hidden="true" />
+              <p>Loading profile…</p>
+            </div>
+          </div>
+        </Container>
+      </section>
+    )
+  }
+
+  if (error || !profile) {
+    return (
+      <section id="home" className="hero-section" aria-labelledby="hero-title">
+        <Container className="hero-grid" style={{ justifyItems: 'center', textAlign: 'center' }}>
+          <div className="hero-copy" style={{ maxWidth: '40rem' }}>
+            <div className="projects-status projects-error" role="alert">
+              <AlertCircle size={24} aria-hidden="true" />
+              <p>Unable to load profile information. Please try refreshing the page.</p>
+            </div>
+          </div>
+        </Container>
+      </section>
+    )
+  }
 
   return (
     <section id="home" className="hero-section" aria-labelledby="hero-title">
@@ -36,9 +68,9 @@ export function HomePage() {
               whileHover={shouldReduceMotion ? undefined : { y: -2 }}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
             >
-              <Button variant="secondary" disabled title="Resume will be available soon">
+              <ButtonLink variant="secondary" href={RESUME_PATH} download={RESUME_FILENAME}>
                 Download Resume
-              </Button>
+              </ButtonLink>
             </motion.div>
           </div>
           <SocialLinks />

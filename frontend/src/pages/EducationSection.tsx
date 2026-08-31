@@ -52,14 +52,19 @@ export function EducationSection() {
 
         {!isLoading && !error && educationData.length > 0 && (
           <div className="education-timeline">
-            {educationData.map((education, index) => (
-              <EducationCard
-                key={education.id}
-                education={education}
-                index={index}
-                isLatest={index === 0}
-              />
-            ))}
+            {[...educationData]
+              .sort((a, b) => {
+                if (a.status === b.status) return 0
+                return a.status === 'currently-pursuing' ? -1 : 1
+              })
+              .map((education, index) => (
+                <EducationCard
+                  key={education.id}
+                  education={education}
+                  index={index}
+                  isLatest={index === 0}
+                />
+              ))}
           </div>
         )}
       </Container>
