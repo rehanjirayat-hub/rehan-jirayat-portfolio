@@ -4,6 +4,9 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { Download, Eye } from 'lucide-react'
 import { Button } from '../ui/Button'
 
+const RESUME_PATH = '/resume/Mohammad_Rehan_Jirayat_Resume.pdf'
+const RESUME_FILENAME = 'Mohammad_Rehan_Jirayat_Resume.pdf'
+
 export function ResumeSection() {
   const shouldReduceMotion = useReducedMotion()
 
@@ -18,7 +21,7 @@ export function ResumeSection() {
       <div className="resume-cta-content">
         <h3 className="resume-cta-title">Resume</h3>
         <p className="resume-cta-description">
-          A resume file has not been added yet. This section is ready to connect to the verified document when it is available.
+          Download or view my resume to learn more about my experience and skills.
         </p>
 
         <div className="resume-cta-actions">
@@ -26,33 +29,31 @@ export function ResumeSection() {
             whileHover={shouldReduceMotion ? undefined : { y: -2 }}
             whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
           >
-            <Button
-              variant="primary"
-              disabled
-              title="Resume file coming soon"
-              className="resume-action-btn"
-            >
-              <Eye size={16} />
-              View Resume
-            </Button>
+            <a href={RESUME_PATH} target="_blank" rel="noopener noreferrer">
+              <Button
+                variant="primary"
+                className="resume-action-btn"
+              >
+                <Eye size={16} />
+                View Resume
+              </Button>
+            </a>
           </motion.div>
           <motion.div
             whileHover={shouldReduceMotion ? undefined : { y: -2 }}
             whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
           >
-            <Button
-              variant="secondary"
-              disabled
-              title="Resume file coming soon"
-              className="resume-action-btn"
-            >
-              <Download size={16} />
-              Download Resume
-            </Button>
+            <a href={RESUME_PATH} download={RESUME_FILENAME}>
+              <Button
+                variant="secondary"
+                className="resume-action-btn"
+              >
+                <Download size={16} />
+                Download Resume
+              </Button>
+            </a>
           </motion.div>
         </div>
-
-        <p className="resume-cta-note">Resume file will be available soon</p>
       </div>
     </motion.div>
   )
