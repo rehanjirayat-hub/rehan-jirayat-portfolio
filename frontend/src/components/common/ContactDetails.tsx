@@ -29,14 +29,14 @@ export function ContactDetails() {
       viewport={{ once: true, margin: '-100px' }}
     >
       <div className="contact-details-section">
-        <h4 className="contact-details-heading">Get in Touch</h4>
+        <h3 className="contact-details-heading">Get in Touch</h3>
         <p className="contact-details-description">
           Interested in collaboration, opportunities, or discussing backend development? Let's connect.
         </p>
       </div>
 
       <div className="contact-details-section">
-        <h4 className="contact-details-section-title">Contact Information</h4>
+        <h3 className="contact-details-section-title">Contact Information</h3>
         <div className="contact-details-list">
           <motion.a
             href={`mailto:${contactInfo.email}`}
@@ -66,7 +66,7 @@ export function ContactDetails() {
       </div>
 
       <div className="contact-details-section">
-        <h4 className="contact-details-section-title">Follow Me</h4>
+        <h3 className="contact-details-section-title">Follow Me</h3>
         <div className="contact-details-social">
           {contactSocialLinks.map((link) => (
             <motion.a

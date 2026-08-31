@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion'
 import { Download, Eye } from 'lucide-react'
-import { Button } from '../ui/Button'
+import { ButtonLink } from '../ui/Button'
 
 const RESUME_PATH = '/resume/Mohammad_Rehan_Jirayat_Resume.pdf'
 const RESUME_FILENAME = 'Mohammad_Rehan_Jirayat_Resume.pdf'
@@ -29,29 +29,30 @@ export function ResumeSection() {
             whileHover={shouldReduceMotion ? undefined : { y: -2 }}
             whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
           >
-            <a href={RESUME_PATH} target="_blank" rel="noopener noreferrer">
-              <Button
-                variant="primary"
-                className="resume-action-btn"
-              >
-                <Eye size={16} />
-                View Resume
-              </Button>
-            </a>
+            <ButtonLink
+              variant="primary"
+              href={RESUME_PATH}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="resume-action-btn"
+            >
+              <Eye size={16} aria-hidden="true" />
+              View Resume
+            </ButtonLink>
           </motion.div>
           <motion.div
             whileHover={shouldReduceMotion ? undefined : { y: -2 }}
             whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
           >
-            <a href={RESUME_PATH} download={RESUME_FILENAME}>
-              <Button
-                variant="secondary"
-                className="resume-action-btn"
-              >
-                <Download size={16} />
-                Download Resume
-              </Button>
-            </a>
+            <ButtonLink
+              variant="secondary"
+              href={RESUME_PATH}
+              download={RESUME_FILENAME}
+              className="resume-action-btn"
+            >
+              <Download size={16} aria-hidden="true" />
+              Download Resume
+            </ButtonLink>
           </motion.div>
         </div>
       </div>
