@@ -45,7 +45,7 @@ export function ContactSection() {
             <SectionHeading
               eyebrow="GET IN TOUCH"
               title="Contact"
-              description="Use the form to prepare a message. Backend delivery will be connected in a later step."
+              description="Have a question or want to work together? Send me a message and I'll get back to you."
               titleId="contact-heading"
             />
           </motion.div>
