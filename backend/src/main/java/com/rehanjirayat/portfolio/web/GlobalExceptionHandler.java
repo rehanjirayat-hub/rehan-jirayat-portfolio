@@ -1,5 +1,6 @@
 package com.rehanjirayat.portfolio.web;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,6 +32,15 @@ public class GlobalExceptionHandler {
         allErrors.addAll(globalErrors);
         problem.setProperty("errors", allErrors);
 
+        return problem;
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ProblemDetail handleNotFound(EntityNotFoundException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                HttpStatus.NOT_FOUND, ex.getMessage());
+        problem.setTitle("Not Found");
+        problem.setType(URI.create("about:blank"));
         return problem;
     }
 }
