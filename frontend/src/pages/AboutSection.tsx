@@ -1,3 +1,4 @@
+import { AlertCircle, Loader2 } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Container } from '../components/common/Container'
@@ -6,10 +7,44 @@ import { ButtonLink } from '../components/ui/Button'
 import { useProfile } from '../hooks/useProfile'
 
 export function AboutSection() {
-  const { profile } = useProfile()
+  const { profile, isLoading, error } = useProfile()
   const shouldReduceMotion = useReducedMotion()
 
-  if (!profile) return null
+  if (isLoading) {
+    return (
+      <section id="about" className="about-section" aria-labelledby="about-title">
+        <Container>
+          <div className="about-grid">
+            <div className="about-copy">
+              <p className="eyebrow">About</p>
+              <div className="projects-status" role="status">
+                <Loader2 size={24} className="projects-spinner" aria-hidden="true" />
+                <p>Loading profile…</p>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+    )
+  }
+
+  if (error || !profile) {
+    return (
+      <section id="about" className="about-section" aria-labelledby="about-title">
+        <Container>
+          <div className="about-grid">
+            <div className="about-copy">
+              <p className="eyebrow">About</p>
+              <div className="projects-status projects-error" role="alert">
+                <AlertCircle size={24} aria-hidden="true" />
+                <p>Unable to load profile information. Please try refreshing the page.</p>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+    )
+  }
 
   return (
     <section id="about" className="about-section" aria-labelledby="about-title">
