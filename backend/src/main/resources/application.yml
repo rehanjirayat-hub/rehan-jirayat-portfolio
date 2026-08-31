@@ -3,15 +3,30 @@ spring:
     name: portfolio-api
 
   datasource:
-    url: jdbc:mysql://localhost:3306/rehan_portfolio?allowPublicKeyRetrieval=true&useSSL=false&defaultAuthenticationPlugin=mysql_native_password
+    url: ${DB_URL:jdbc:mysql://localhost:3306/rehan_portfolio?allowPublicKeyRetrieval=true&useSSL=false&defaultAuthenticationPlugin=mysql_native_password}
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:}
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: ${JPA_DDL_AUTO:update}
     show-sql: false
     open-in-view: false
 
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_SMTP_AUTH:true}
+          starttls:
+            enable: ${MAIL_STARTTLS:true}
+
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
+
+contact:
+  notification-email: ${CONTACT_NOTIFICATION_EMAIL:}
