@@ -1,15 +1,17 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { Braces, Database, PanelTop, ServerCog, TestTube2, Wrench } from 'lucide-react'
+import { CloudCog, Code2, Database, Layers3, PanelTop, ServerCog, ShieldCheck, TestTube2 } from 'lucide-react'
 import { Badge } from '../ui/Badge'
 import { Card } from '../ui/Card'
 import type { SkillCategory, SkillCategoryId } from '../../types/skills'
 
 const categoryIcons: Record<SkillCategoryId, typeof ServerCog> = {
-  backend: ServerCog,
-  'core-java': Braces,
+  'java-backend': ServerCog,
+  'spring-ecosystem': ShieldCheck,
   database: Database,
-  testing: TestTube2,
-  tools: Wrench,
+  architecture: Layers3,
+  'testing-tools': TestTube2,
+  ides: Code2,
+  'devops-cloud': CloudCog,
   frontend: PanelTop,
 }
 

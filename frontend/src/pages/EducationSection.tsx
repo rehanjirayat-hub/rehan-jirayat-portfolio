@@ -24,6 +24,7 @@ export function EducationSection() {
             eyebrow="ACADEMIC JOURNEY"
             title="Education"
             description="Building a strong foundation in computer science and applications development."
+            titleId="education-heading"
           />
         </motion.div>
 
@@ -40,7 +41,7 @@ export function EducationSection() {
       </Container>
 
       {/* Certifications Section */}
-      <div id="certifications" className="certifications-section-wrapper">
+      <section id="certifications" className="certifications-section-wrapper" aria-labelledby="certifications-heading">
         <Container>
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
@@ -51,13 +52,14 @@ export function EducationSection() {
             <SectionHeading
               eyebrow="CREDENTIALS"
               title="Certifications"
-              description="Professional certifications and achievements."
+              description="Verified certifications will appear here when available."
+              titleId="certifications-heading"
             />
           </motion.div>
 
           <CertificationsSection />
         </Container>
-      </div>
+      </section>
     </section>
   )
 }

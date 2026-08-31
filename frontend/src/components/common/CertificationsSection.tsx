@@ -50,10 +50,9 @@ export function CertificationsSection() {
             />
           </svg>
         </div>
-        <h3 className="certifications-empty-title">No Certifications Yet</h3>
+        <h3 className="certifications-empty-title">No certifications added yet.</h3>
         <p className="certifications-empty-message">
-          I'm focused on building practical experience through real projects. Certifications will be added as they're
-          completed.
+          This section is ready for verified certifications when they are available.
         </p>
       </motion.div>
     </section>

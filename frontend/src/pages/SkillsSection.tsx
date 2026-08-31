@@ -18,8 +18,9 @@ export function SkillsSection() {
         >
           <SectionHeading
             eyebrow="Skills"
-            title="Java backend development, supported by practical foundations."
-            description="My primary direction is Java and Spring Boot backend development, built on Core Java, database, testing, and development-tool foundations."
+            title="Java Backend Developer with Spring Boot and API-first backend strengths."
+            description="My primary direction is Java backend development, centred on Spring Boot, REST APIs, JPA/Hibernate, Spring Security, and MySQL-backed application design."
+            titleId="skills-title"
           />
         </motion.div>
         <div className="skills-grid">

@@ -1,10 +1,9 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import { useState } from 'react'
 import type { Project } from '../../types/projects'
 import { Card } from '../ui/Card'
-import { Button } from '../ui/Button'
+import { Button, ButtonLink } from '../ui/Button'
 import { TechnologyBadge } from '../ui/TechnologyBadge'
 
 interface ProjectCardProps {
@@ -15,20 +14,15 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, onViewDetails, index }: ProjectCardProps) {
   const shouldReduceMotion = useReducedMotion()
-  const [isHovering, setIsHovering] = useState(false)
 
   return (
     <motion.div
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+      initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
       whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true, margin: '-100px' }}
     >
-      <Card
-        className="project-card"
-        onMouseEnter={() => !shouldReduceMotion && setIsHovering(true)}
-        onMouseLeave={() => !shouldReduceMotion && setIsHovering(false)}
-      >
+      <Card className="project-card">
         <div className="project-card-header">
           <div className="project-visual">
             <div className="project-visual-inner">
@@ -67,14 +61,16 @@ export function ProjectCard({ project, onViewDetails, index }: ProjectCardProps)
               whileHover={shouldReduceMotion ? undefined : { y: -2 }}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
             >
-              <Button
+              <ButtonLink
                 variant="secondary"
-                onClick={() => window.open(project.githubUrl, '_blank', 'noopener,noreferrer')}
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="project-github-btn"
                 aria-label={`Open ${project.name} repository on GitHub`}
               >
                 GitHub
-              </Button>
+              </ButtonLink>
             </motion.div>
           </div>
         </div>

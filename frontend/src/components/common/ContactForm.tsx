@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { Info } from 'lucide-react'
 import { useState } from 'react'
 import type { ContactFormData, ContactFormErrors } from '../../types/contact'
 import { Button } from '../ui/Button'
@@ -50,8 +51,7 @@ export function ContactForm() {
     message: '',
   })
   const [errors, setErrors] = useState<ContactFormErrors>({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [isPrepared, setIsPrepared] = useState(false)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -61,7 +61,6 @@ export function ContactForm() {
       ...prev,
       [name]: value,
     }))
-    // Clear error for this field when user starts typing
     if (errors[name as keyof ContactFormErrors]) {
       setErrors((prev) => ({
         ...prev,
@@ -70,7 +69,7 @@ export function ContactForm() {
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const newErrors = validateForm(formData)
@@ -79,19 +78,7 @@ export function ContactForm() {
       return
     }
 
-    setIsSubmitting(true)
-
-    // Simulate a brief delay to feel like something is happening
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitSuccess(true)
-      setFormData({ name: '', email: '', subject: '', message: '' })
-
-      // Reset success state after 6 seconds
-      setTimeout(() => {
-        setSubmitSuccess(false)
-      }, 6000)
-    }, 800)
+    setIsPrepared(true)
   }
 
   return (
@@ -105,20 +92,22 @@ export function ContactForm() {
       noValidate
     >
       <AnimatePresence>
-        {submitSuccess && (
+        {isPrepared && (
           <motion.div
             className="contact-form-success"
-            initial={shouldReduceMotion ? false : { opacity: 0, y: -10 }}
+            initial={shouldReduceMotion ? undefined : { opacity: 0, y: -10 }}
             animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            exit={shouldReduceMotion ? false : { opacity: 0, y: -10 }}
+            exit={shouldReduceMotion ? undefined : { opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
             role="alert"
           >
-            <div className="contact-form-success-icon">✓</div>
+            <div className="contact-form-success-icon">
+              <Info aria-hidden="true" size={16} />
+            </div>
             <div className="contact-form-success-content">
-              <h4 className="contact-form-success-title">Demo submission successful</h4>
+              <h4 className="contact-form-success-title">Message ready for backend delivery</h4>
               <p className="contact-form-success-message">
-                Backend integration will be connected next. I'll respond to your message soon.
+                This form is frontend-only. Sending will be connected when backend integration is added.
               </p>
             </div>
           </motion.div>
@@ -135,7 +124,7 @@ export function ContactForm() {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          disabled={submitSuccess || isSubmitting}
+          disabled={isPrepared}
           className={`contact-form-input ${errors.name ? 'contact-form-input-error' : ''}`}
           aria-describedby={errors.name ? 'contact-name-error' : undefined}
           required
@@ -145,9 +134,9 @@ export function ContactForm() {
             <motion.div
               id="contact-name-error"
               className="contact-form-error"
-              initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              initial={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
               animate={shouldReduceMotion ? undefined : { opacity: 1, height: 'auto' }}
-              exit={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
               role="alert"
             >
               {errors.name}
@@ -166,7 +155,7 @@ export function ContactForm() {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          disabled={submitSuccess || isSubmitting}
+          disabled={isPrepared}
           className={`contact-form-input ${errors.email ? 'contact-form-input-error' : ''}`}
           aria-describedby={errors.email ? 'contact-email-error' : undefined}
           required
@@ -176,9 +165,9 @@ export function ContactForm() {
             <motion.div
               id="contact-email-error"
               className="contact-form-error"
-              initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              initial={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
               animate={shouldReduceMotion ? undefined : { opacity: 1, height: 'auto' }}
-              exit={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
               role="alert"
             >
               {errors.email}
@@ -197,7 +186,7 @@ export function ContactForm() {
           name="subject"
           value={formData.subject}
           onChange={handleChange}
-          disabled={submitSuccess || isSubmitting}
+          disabled={isPrepared}
           className={`contact-form-input ${errors.subject ? 'contact-form-input-error' : ''}`}
           aria-describedby={errors.subject ? 'contact-subject-error' : undefined}
           required
@@ -207,9 +196,9 @@ export function ContactForm() {
             <motion.div
               id="contact-subject-error"
               className="contact-form-error"
-              initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              initial={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
               animate={shouldReduceMotion ? undefined : { opacity: 1, height: 'auto' }}
-              exit={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
               role="alert"
             >
               {errors.subject}
@@ -227,7 +216,7 @@ export function ContactForm() {
           name="message"
           value={formData.message}
           onChange={handleChange}
-          disabled={submitSuccess || isSubmitting}
+          disabled={isPrepared}
           className={`contact-form-textarea ${errors.message ? 'contact-form-input-error' : ''}`}
           aria-describedby={errors.message ? 'contact-message-error' : undefined}
           rows={5}
@@ -238,9 +227,9 @@ export function ContactForm() {
             <motion.div
               id="contact-message-error"
               className="contact-form-error"
-              initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              initial={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
               animate={shouldReduceMotion ? undefined : { opacity: 1, height: 'auto' }}
-              exit={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
               role="alert"
             >
               {errors.message}
@@ -255,10 +244,10 @@ export function ContactForm() {
       >
         <Button
           type="submit"
-          disabled={isSubmitting || submitSuccess}
+          disabled={isPrepared}
           className="contact-form-submit"
         >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+          Prepare Message
         </Button>
       </motion.div>
     </motion.form>

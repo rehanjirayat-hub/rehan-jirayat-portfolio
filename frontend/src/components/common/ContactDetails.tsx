@@ -42,7 +42,6 @@ export function ContactDetails() {
             href={`mailto:${contactInfo.email}`}
             className="contact-details-item"
             whileHover={shouldReduceMotion ? undefined : { x: 4 }}
-            rel="noopener noreferrer"
             aria-label={`Email ${contactInfo.email}`}
           >
             <Mail size={18} className="contact-details-icon" aria-hidden="true" />
@@ -53,7 +52,6 @@ export function ContactDetails() {
             href={`tel:${contactInfo.phone}`}
             className="contact-details-item"
             whileHover={shouldReduceMotion ? undefined : { x: 4 }}
-            rel="noopener noreferrer"
             aria-label={`Call ${contactInfo.phone}`}
           >
             <Phone size={18} className="contact-details-icon" aria-hidden="true" />

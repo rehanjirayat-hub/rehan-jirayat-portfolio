@@ -22,9 +22,10 @@ export function ContactSection() {
             viewport={{ once: true, margin: '-100px' }}
           >
             <SectionHeading
-              eyebrow="PROFESSIONAL DOCUMENT"
+              eyebrow="DOCUMENT"
               title="Resume"
-              description="Download or view my complete professional resume highlighting experience, skills, and achievements in Java backend development."
+              description="A resume file will be connected here when the verified document is available."
+              titleId="resume-heading"
             />
           </motion.div>
 
@@ -43,8 +44,9 @@ export function ContactSection() {
           >
             <SectionHeading
               eyebrow="GET IN TOUCH"
-              title="Let's Connect"
-              description="Have an opportunity, want to collaborate, or just want to chat about backend development? I'd love to hear from you."
+              title="Contact"
+              description="Use the form to prepare a message. Backend delivery will be connected in a later step."
+              titleId="contact-heading"
             />
           </motion.div>
 

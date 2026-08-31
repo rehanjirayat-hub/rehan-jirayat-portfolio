@@ -226,6 +226,7 @@ a {
 .badge {
   display: inline-flex;
   align-items: center;
+  max-width: 100%;
   border: 1px solid rgb(87 199 174 / 24%);
   border-radius: 999px;
   background: rgb(87 199 174 / 7%);
@@ -233,6 +234,9 @@ a {
   color: #b8dbd3;
   font-size: 0.75rem;
   font-weight: 600;
+  line-height: 1.4;
+  white-space: normal;
+  text-align: center;
 }
 
 .surface-card {
@@ -583,6 +587,12 @@ a {
   margin: 0;
 }
 
+.education-preview-status {
+  margin: 0.4rem 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.74rem;
+}
+
 .education-degree {
   color: var(--color-accent-strong);
   font-size: 0.85rem;
@@ -649,6 +659,16 @@ a {
 .skills-card-primary .skills-card {
   border-color: rgb(87 199 174 / 31%);
   background: linear-gradient(140deg, rgb(22 53 48 / 72%), rgb(13 27 26 / 92%));
+}
+
+.skills-card-secondary .skills-card {
+  border-color: rgb(144 168 161 / 18%);
+  background: linear-gradient(145deg, rgb(17 29 30 / 86%), rgb(10 18 18 / 80%));
+}
+
+.skills-card-supporting .skills-card {
+  border-color: rgb(155 178 174 / 12%);
+  background: linear-gradient(145deg, rgb(12 22 22 / 76%), rgb(10 16 16 / 70%));
 }
 
 .skills-card-header {
@@ -965,7 +985,7 @@ a {
   font-size: 0.95rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0;
 }
 
 .project-detail-section p {
@@ -1016,7 +1036,37 @@ a {
   gap: 1.5rem;
   margin-top: 2.5rem;
 }
+.education-university {
+  margin: 0.25rem 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
 
+.education-website {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  border: 1px solid rgb(87 199 174 / 24%);
+  border-radius: var(--radius-md);
+  background: rgb(87 199 174 / 8%);
+  padding: 0.5rem 0.75rem;
+  color: var(--color-accent-strong);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.education-website:hover {
+  border-color: rgb(87 199 174 / 40%);
+  background: rgb(87 199 174 / 14%);
+}
+
+.education-website svg {
+  flex: 0 0 auto;
+}
 .education-card-wrapper {
   position: relative;
   min-width: 0;
@@ -1153,6 +1203,9 @@ a {
 }
 
 .education-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   margin: 0;
   color: var(--color-text-muted);
   font-size: 0.875rem;
@@ -1177,7 +1230,7 @@ a {
   font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0;
 }
 
 .education-card .education-meta-value {
@@ -1357,7 +1410,7 @@ a {
   font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0;
 }
 
 .contact-details-list {

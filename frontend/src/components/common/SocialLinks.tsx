@@ -28,7 +28,7 @@ export function SocialLinks() {
             aria-label={link.label}
             title={link.label}
             target={isExternal ? '_blank' : undefined}
-            rel={isExternal ? 'noreferrer' : undefined}
+            rel={isExternal ? 'noopener noreferrer' : undefined}
           >
             <Icon aria-hidden="true" size={18} />
           </a>

@@ -9,8 +9,10 @@ export interface SocialLink {
 export interface PortfolioProfile {
   name: string
   role: string
+  specialization: string
   location: string
   email: string
+  phone: string
   heroStatement: string
   socialLinks: SocialLink[]
 }

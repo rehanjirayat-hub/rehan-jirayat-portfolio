@@ -16,9 +16,9 @@ export function ResumeSection() {
       viewport={{ once: true, margin: '-100px' }}
     >
       <div className="resume-cta-content">
-        <h3 className="resume-cta-title">Professional Resume</h3>
+        <h3 className="resume-cta-title">Resume</h3>
         <p className="resume-cta-description">
-          My comprehensive resume documenting professional experience, technical expertise, and project achievements in Java backend development.
+          A resume file has not been added yet. This section is ready to connect to the verified document when it is available.
         </p>
 
         <div className="resume-cta-actions">

@@ -30,6 +30,7 @@ export function ProjectsSection() {
             eyebrow="FEATURED WORK"
             title="Featured Projects"
             description="Practical Java development showcasing backend architecture, database integration, and maintainable code."
+            titleId="projects-heading"
           />
         </motion.div>
 

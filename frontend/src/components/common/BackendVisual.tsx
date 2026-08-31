@@ -17,7 +17,7 @@ export function BackendVisual() {
       animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.18, ease: 'easeOut' }}
     >
-      <div className="backend-visual" aria-label="Java and Spring Boot backend development">
+      <div className="backend-visual" aria-hidden="true">
         <div className="backend-visual-topline">
           <span className="status-dot" aria-hidden="true" />
           <span>backend-system</span>
