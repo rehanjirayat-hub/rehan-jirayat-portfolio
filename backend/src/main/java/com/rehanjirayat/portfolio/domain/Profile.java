@@ -33,11 +33,7 @@ public class Profile {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String heroStatement;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-        name = "profile_social_links",
-        joinColumns = @JoinColumn(name = "profile_id")
-    )
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SocialLink> socialLinks = new ArrayList<>();
 
     protected Profile() {

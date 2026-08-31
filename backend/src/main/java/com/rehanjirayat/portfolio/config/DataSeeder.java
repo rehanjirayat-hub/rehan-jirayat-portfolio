@@ -80,14 +80,12 @@ public class DataSeeder implements CommandLineRunner {
                 "Layered Architecture.",
                 "JUnit 5 is included in the project technology stack."
         );
-        foodflow.getTechnologies().addAll(List.of(
-                new ProjectTechnology("Core Java", TechnologyCategory.language),
-                new ProjectTechnology("JDBC", TechnologyCategory.framework),
-                new ProjectTechnology("MySQL", TechnologyCategory.database),
-                new ProjectTechnology("Maven", TechnologyCategory.tool),
-                new ProjectTechnology("JUnit 5", TechnologyCategory.testing),
-                new ProjectTechnology("Layered Architecture", TechnologyCategory.architecture)
-        ));
+        addTech(foodflow, "Core Java", TechnologyCategory.language);
+        addTech(foodflow, "JDBC", TechnologyCategory.framework);
+        addTech(foodflow, "MySQL", TechnologyCategory.database);
+        addTech(foodflow, "Maven", TechnologyCategory.tool);
+        addTech(foodflow, "JUnit 5", TechnologyCategory.testing);
+        addTech(foodflow, "Layered Architecture", TechnologyCategory.architecture);
         projectRepository.save(foodflow);
 
         Project payroll = new Project(
@@ -100,18 +98,22 @@ public class DataSeeder implements CommandLineRunner {
                 "Layered Architecture.",
                 "JUnit 5 integration tests are documented in the repository."
         );
-        payroll.getTechnologies().addAll(List.of(
-                new ProjectTechnology("Java 21", TechnologyCategory.language),
-                new ProjectTechnology("OOP", TechnologyCategory.architecture),
-                new ProjectTechnology("Collections", TechnologyCategory.framework),
-                new ProjectTechnology("JDBC", TechnologyCategory.framework),
-                new ProjectTechnology("MySQL", TechnologyCategory.database),
-                new ProjectTechnology("Maven", TechnologyCategory.tool),
-                new ProjectTechnology("JUnit 5", TechnologyCategory.testing),
-                new ProjectTechnology("Git/GitHub", TechnologyCategory.tool),
-                new ProjectTechnology("Layered Architecture", TechnologyCategory.architecture)
-        ));
+        addTech(payroll, "Java 21", TechnologyCategory.language);
+        addTech(payroll, "OOP", TechnologyCategory.architecture);
+        addTech(payroll, "Collections", TechnologyCategory.framework);
+        addTech(payroll, "JDBC", TechnologyCategory.framework);
+        addTech(payroll, "MySQL", TechnologyCategory.database);
+        addTech(payroll, "Maven", TechnologyCategory.tool);
+        addTech(payroll, "JUnit 5", TechnologyCategory.testing);
+        addTech(payroll, "Git/GitHub", TechnologyCategory.tool);
+        addTech(payroll, "Layered Architecture", TechnologyCategory.architecture);
         projectRepository.save(payroll);
+    }
+
+    private void addTech(Project project, String name, TechnologyCategory category) {
+        ProjectTechnology tech = new ProjectTechnology(name, category);
+        tech.setProject(project);
+        project.getTechnologies().add(tech);
     }
 
     private void seedProfile() {
@@ -124,13 +126,17 @@ public class DataSeeder implements CommandLineRunner {
                 "9900422726",
                 "I build secure, scalable, and maintainable backend applications using Java and Spring Boot."
         );
-        profile.getSocialLinks().addAll(List.of(
-                new SocialLink("github", "https://github.com/rehanjirayat-hub", "GitHub profile"),
-                new SocialLink("linkedin", "https://www.linkedin.com/in/rehan-jirat-5683573a2/", "LinkedIn profile"),
-                new SocialLink("leetcode", "https://leetcode.com/u/sKGBJtR8N6/", "LeetCode profile"),
-                new SocialLink("email", "mailto:rehanjirayat@gmail.com", "Email Mohammad Rehan Jirayat")
-        ));
+        addLink(profile, "github", "https://github.com/rehanjirayat-hub", "GitHub profile");
+        addLink(profile, "linkedin", "https://www.linkedin.com/in/rehan-jirat-5683573a2/", "LinkedIn profile");
+        addLink(profile, "leetcode", "https://leetcode.com/u/sKGBJtR8N6/", "LeetCode profile");
+        addLink(profile, "email", "mailto:rehanjirayat@gmail.com", "Email Mohammad Rehan Jirayat");
         profileRepository.save(profile);
+    }
+
+    private void addLink(Profile profile, String platform, String href, String label) {
+        SocialLink link = new SocialLink(platform, href, label);
+        link.setProfile(profile);
+        profile.getSocialLinks().add(link);
     }
 
     private void seedEducation() {
@@ -169,58 +175,94 @@ public class DataSeeder implements CommandLineRunner {
         SkillCategory javaBackend = new SkillCategory(
                 "java-backend", "Java & Backend",
                 "Core Java and backend application foundations", SkillEmphasis.primary);
-        javaBackend.getSkills().addAll(List.of(
-                "Core Java", "OOP", "Collections", "Exception Handling",
-                "Multithreading", "DSA", "JDBC", "Servlets", "JSP",
-                "REST APIs", "Logging", "Spring AI"));
+        addSkill(javaBackend, "Core Java");
+        addSkill(javaBackend, "OOP");
+        addSkill(javaBackend, "Collections");
+        addSkill(javaBackend, "Exception Handling");
+        addSkill(javaBackend, "Multithreading");
+        addSkill(javaBackend, "DSA");
+        addSkill(javaBackend, "JDBC");
+        addSkill(javaBackend, "Servlets");
+        addSkill(javaBackend, "JSP");
+        addSkill(javaBackend, "REST APIs");
+        addSkill(javaBackend, "Logging");
+        addSkill(javaBackend, "Spring AI");
         skillCategoryRepository.save(javaBackend);
 
         SkillCategory spring = new SkillCategory(
                 "spring-ecosystem", "Spring Ecosystem",
                 "Frameworks, APIs, and security for backend development", SkillEmphasis.primary);
-        spring.getSkills().addAll(List.of(
-                "Spring Framework", "Spring Boot", "Spring MVC", "Spring Data JPA",
-                "Hibernate", "Spring Security", "JWT", "OAuth2"));
+        addSkill(spring, "Spring Framework");
+        addSkill(spring, "Spring Boot");
+        addSkill(spring, "Spring MVC");
+        addSkill(spring, "Spring Data JPA");
+        addSkill(spring, "Hibernate");
+        addSkill(spring, "Spring Security");
+        addSkill(spring, "JWT");
+        addSkill(spring, "OAuth2");
         skillCategoryRepository.save(spring);
 
         SkillCategory database = new SkillCategory(
                 "database", "Database",
                 "Persistent data and SQL fundamentals", SkillEmphasis.secondary);
-        database.getSkills().addAll(List.of("MySQL", "SQL"));
+        addSkill(database, "MySQL");
+        addSkill(database, "SQL");
         skillCategoryRepository.save(database);
 
         SkillCategory architecture = new SkillCategory(
                 "architecture", "Architecture",
                 "Layered and service-oriented backend design", SkillEmphasis.secondary);
-        architecture.getSkills().addAll(List.of(
-                "Layered Architecture", "MVC (Model-View-Controller)", "Microservices"));
+        addSkill(architecture, "Layered Architecture");
+        addSkill(architecture, "MVC (Model-View-Controller)");
+        addSkill(architecture, "Microservices");
         skillCategoryRepository.save(architecture);
 
         SkillCategory testingTools = new SkillCategory(
                 "testing-tools", "Testing & Development Tools",
                 "Build, test, and API validation workflows", SkillEmphasis.secondary);
-        testingTools.getSkills().addAll(List.of(
-                "Maven", "Gradle", "JUnit 5", "Mockito", "Git", "GitHub", "Postman"));
+        addSkill(testingTools, "Maven");
+        addSkill(testingTools, "Gradle");
+        addSkill(testingTools, "JUnit 5");
+        addSkill(testingTools, "Mockito");
+        addSkill(testingTools, "Git");
+        addSkill(testingTools, "GitHub");
+        addSkill(testingTools, "Postman");
         skillCategoryRepository.save(testingTools);
 
         SkillCategory ides = new SkillCategory(
                 "ides", "IDEs",
                 "Core development environments", SkillEmphasis.supporting);
-        ides.getSkills().addAll(List.of("IntelliJ IDEA", "Eclipse", "Visual Studio Code"));
+        addSkill(ides, "IntelliJ IDEA");
+        addSkill(ides, "Eclipse");
+        addSkill(ides, "Visual Studio Code");
         skillCategoryRepository.save(ides);
 
         SkillCategory devops = new SkillCategory(
                 "devops-cloud", "DevOps & Cloud",
                 "Deployment and operational support", SkillEmphasis.supporting);
-        devops.getSkills().addAll(List.of(
-                "Docker", "Cloud Deployment", "Linux", "Ansible", "Jenkins", "Terraform"));
+        addSkill(devops, "Docker");
+        addSkill(devops, "Cloud Deployment");
+        addSkill(devops, "Linux");
+        addSkill(devops, "Ansible");
+        addSkill(devops, "Jenkins");
+        addSkill(devops, "Terraform");
         skillCategoryRepository.save(devops);
 
         SkillCategory frontend = new SkillCategory(
                 "frontend", "Supporting Frontend",
                 "Supporting UI and web foundation technologies", SkillEmphasis.supporting);
-        frontend.getSkills().addAll(List.of(
-                "React", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS"));
+        addSkill(frontend, "React");
+        addSkill(frontend, "TypeScript");
+        addSkill(frontend, "JavaScript");
+        addSkill(frontend, "HTML");
+        addSkill(frontend, "CSS");
+        addSkill(frontend, "Tailwind CSS");
         skillCategoryRepository.save(frontend);
+    }
+
+    private void addSkill(SkillCategory category, String skillName) {
+        CategorySkill skill = new CategorySkill(skillName);
+        skill.setCategory(category);
+        category.getSkills().add(skill);
     }
 }

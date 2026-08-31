@@ -1,5 +1,6 @@
 package com.rehanjirayat.portfolio.web;
 
+import com.rehanjirayat.portfolio.domain.CategorySkill;
 import com.rehanjirayat.portfolio.domain.SkillCategory;
 import com.rehanjirayat.portfolio.domain.SkillEmphasis;
 import com.rehanjirayat.portfolio.service.SkillCategoryService;
@@ -33,7 +34,9 @@ class SkillCategoryControllerTest {
     @Test
     void findAll_returnsOkWithSkillCategories() throws Exception {
         SkillCategory cat = new SkillCategory("java-backend", "Java", "Core Java", SkillEmphasis.primary);
-        cat.getSkills().addAll(List.of("Java", "OOP", "Collections"));
+        addSkill(cat, "Java");
+        addSkill(cat, "OOP");
+        addSkill(cat, "Collections");
 
         when(skillCategoryService.findAll()).thenReturn(List.of(cat));
 
@@ -57,5 +60,11 @@ class SkillCategoryControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$").isEmpty());
+    }
+
+    private void addSkill(SkillCategory category, String skillName) {
+        CategorySkill skill = new CategorySkill(skillName);
+        skill.setCategory(category);
+        category.getSkills().add(skill);
     }
 }

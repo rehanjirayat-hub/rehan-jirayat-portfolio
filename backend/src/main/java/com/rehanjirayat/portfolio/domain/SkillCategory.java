@@ -1,6 +1,8 @@
 package com.rehanjirayat.portfolio.domain;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "skill_categories")
@@ -20,13 +22,8 @@ public class SkillCategory {
     @Column(nullable = false, length = 20)
     private SkillEmphasis emphasis;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-        name = "skill_category_skills",
-        joinColumns = @JoinColumn(name = "category_id")
-    )
-    @Column(name = "skill")
-    private java.util.List<String> skills = new java.util.ArrayList<>();
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<CategorySkill> skills = new ArrayList<>();
 
     protected SkillCategory() {
     }
@@ -54,7 +51,7 @@ public class SkillCategory {
         return emphasis;
     }
 
-    public java.util.List<String> getSkills() {
+    public List<CategorySkill> getSkills() {
         return skills;
     }
 }

@@ -3,29 +3,33 @@ package com.rehanjirayat.portfolio.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmailService {
 
     private static final Logger log = LoggerFactory.getLogger(EmailService.class);
+    private static final String RESEND_API_URL = "https://api.resend.com/emails";
+    private static final String FROM_EMAIL = "onboarding@resend.dev";
 
-    private final JavaMailSender mailSender;
+    private final RestClient restClient;
 
     @Value("${contact.notification-email:}")
     private String notificationEmail;
 
-    @Value("${spring.mail.username:}")
-    private String mailFrom;
+    @Value("${RESEND_API_KEY:}")
+    private String resendApiKey;
 
-    public EmailService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+    public EmailService(RestClient.Builder restClientBuilder) {
+        this.restClient = restClientBuilder
+                .baseUrl(RESEND_API_URL)
+                .build();
     }
 
     @Async
@@ -35,23 +39,28 @@ public class EmailService {
             return;
         }
 
+        if (resendApiKey == null || resendApiKey.isBlank()) {
+            log.warn("RESEND_API_KEY is not configured — skipping email send");
+            return;
+        }
+
         try {
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            Map<String, Object> body = Map.of(
+                    "from", FROM_EMAIL,
+                    "to", List.of(notificationEmail),
+                    "subject", "New Contact Message: " + subject,
+                    "html", buildEmailHtml(name, email, subject, message)
+            );
 
-            helper.setFrom(mailFrom);
-            helper.setTo(notificationEmail);
-            helper.setSubject("New Contact Message: " + subject);
+            ResponseEntity<Void> response = restClient.post()
+                    .header("Authorization", "Bearer " + resendApiKey)
+                    .body(body)
+                    .retrieve()
+                    .toBodilessEntity();
 
-            String htmlBody = buildEmailHtml(name, email, subject, message);
-            helper.setText(htmlBody, true);
-
-            mailSender.send(mimeMessage);
             log.info("Contact notification email sent successfully to {}", notificationEmail);
-        } catch (MessagingException e) {
-            log.error("Failed to send contact notification email: {}", e.getMessage());
         } catch (Exception e) {
-            log.error("Unexpected error sending contact notification email: {}", e.getMessage());
+            log.error("Failed to send contact notification email: {}", e.getMessage());
         }
     }
 

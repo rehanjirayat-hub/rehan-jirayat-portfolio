@@ -21,11 +21,7 @@ public class Project {
     @Column(nullable = false, length = 20)
     private String status;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-        name = "project_technologies",
-        joinColumns = @JoinColumn(name = "project_id")
-    )
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<ProjectTechnology> technologies = new ArrayList<>();
 
     @Column(nullable = false, length = 500)

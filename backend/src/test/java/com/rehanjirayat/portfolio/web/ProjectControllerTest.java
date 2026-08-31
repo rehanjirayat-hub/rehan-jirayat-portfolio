@@ -38,9 +38,15 @@ class ProjectControllerTest {
                 "test-project", "Test Project", "A test project", "completed",
                 "https://github.com/test/project", "Overview text",
                 "Architecture text", "Testing text");
-        project.getTechnologies().add(new ProjectTechnology("Java", TechnologyCategory.language));
-        project.getTechnologies().add(new ProjectTechnology("Spring Boot", TechnologyCategory.framework));
+        addTech(project, "Java", TechnologyCategory.language);
+        addTech(project, "Spring Boot", TechnologyCategory.framework);
         return project;
+    }
+
+    private void addTech(Project project, String name, TechnologyCategory category) {
+        ProjectTechnology tech = new ProjectTechnology(name, category);
+        tech.setProject(project);
+        project.getTechnologies().add(tech);
     }
 
     @Test
