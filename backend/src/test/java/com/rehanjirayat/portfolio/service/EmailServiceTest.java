@@ -1,45 +1,43 @@
 package com.rehanjirayat.portfolio.service;
 
-import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
+import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.client.RestClient;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EmailServiceTest {
 
-    @Mock
-    private JavaMailSender mailSender;
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private RestClient restClient;
 
-    @InjectMocks
     private EmailService emailService;
 
     @BeforeEach
     void setUp() {
+        RestClient.Builder builder = mock(RestClient.Builder.class);
+        when(builder.baseUrl(anyString())).thenReturn(builder);
+        when(builder.build()).thenReturn(restClient);
+
+        emailService = new EmailService(builder);
+
         ReflectionTestUtils.setField(emailService, "notificationEmail", "test@example.com");
-        ReflectionTestUtils.setField(emailService, "mailFrom", "noreply@portfolio.com");
+        ReflectionTestUtils.setField(emailService, "resendApiKey", "re_test_key_123");
     }
 
     @Test
     void sendContactNotification_sendsEmailSuccessfully() {
-        MimeMessage mimeMessage = mock(MimeMessage.class);
-        when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
-
         emailService.sendContactNotification("John Doe", "john@example.com", "Hello", "Test message");
 
-        verify(mailSender).createMimeMessage();
-        verify(mailSender).send(any(MimeMessage.class));
+        verify(restClient).post();
     }
 
     @Test
@@ -48,8 +46,7 @@ class EmailServiceTest {
 
         emailService.sendContactNotification("John Doe", "john@example.com", "Hello", "Test message");
 
-        verify(mailSender, never()).createMimeMessage();
-        verify(mailSender, never()).send(any(MimeMessage.class));
+        verifyNoInteractions(restClient);
     }
 
     @Test
@@ -58,49 +55,50 @@ class EmailServiceTest {
 
         emailService.sendContactNotification("John Doe", "john@example.com", "Hello", "Test message");
 
-        verify(mailSender, never()).createMimeMessage();
-        verify(mailSender, never()).send(any(MimeMessage.class));
+        verifyNoInteractions(restClient);
     }
 
     @Test
-    void sendContactNotification_doesNotThrowWhenMailSendFails() {
-        MimeMessage mimeMessage = mock(MimeMessage.class);
-        when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
-        doThrow(new MailException("SMTP error") {})
-                .when(mailSender).send(any(MimeMessage.class));
+    void sendContactNotification_skipsWhenApiKeyNotConfigured() {
+        ReflectionTestUtils.setField(emailService, "resendApiKey", "");
+
+        emailService.sendContactNotification("John Doe", "john@example.com", "Hello", "Test message");
+
+        verifyNoInteractions(restClient);
+    }
+
+    @Test
+    void sendContactNotification_skipsWhenApiKeyIsBlank() {
+        ReflectionTestUtils.setField(emailService, "resendApiKey", "   ");
+
+        emailService.sendContactNotification("John Doe", "john@example.com", "Hello", "Test message");
+
+        verifyNoInteractions(restClient);
+    }
+
+    @Test
+    void sendContactNotification_doesNotThrowWhenApiCallFails() {
+        when(restClient.post().header(anyString(), anyString()).body(any()).retrieve().toBodilessEntity())
+                .thenThrow(new RuntimeException("API error"));
 
         assertDoesNotThrow(() ->
                 emailService.sendContactNotification("John Doe", "john@example.com", "Hello", "Test message")
         );
-
-        verify(mailSender).send(any(MimeMessage.class));
     }
 
     @Test
     void sendContactNotification_doesNotThrowWhenUnexpectedExceptionOccurs() {
-        MimeMessage mimeMessage = mock(MimeMessage.class);
-        when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
-        doThrow(new RuntimeException("Unexpected failure"))
-                .when(mailSender).send(any(MimeMessage.class));
+        when(restClient.post()).thenThrow(new RuntimeException("Unexpected failure"));
 
         assertDoesNotThrow(() ->
                 emailService.sendContactNotification("John Doe", "john@example.com", "Hello", "Test message")
         );
-
-        verify(mailSender).send(any(MimeMessage.class));
     }
 
     @Test
-    void sendContactNotification_usesCorrectRecipient() {
-        MimeMessage mimeMessage = mock(MimeMessage.class);
-        when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
-
+    void sendContactNotification_sendsToCorrectRecipient() {
         emailService.sendContactNotification("John Doe", "john@example.com", "Hello", "Test message");
 
-        ArgumentCaptor<MimeMessage> captor = ArgumentCaptor.forClass(MimeMessage.class);
-        verify(mailSender).send(captor.capture());
-
-        MimeMessage sentMessage = captor.getValue();
-        assertNotNull(sentMessage);
+        verify(restClient.post()).header(eq("Authorization"), eq("Bearer re_test_key_123"));
     }
 }

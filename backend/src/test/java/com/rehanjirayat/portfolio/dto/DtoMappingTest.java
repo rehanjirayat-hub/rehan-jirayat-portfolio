@@ -13,7 +13,9 @@ class DtoMappingTest {
     void profileResponse_mapsAllFields() {
         Profile profile = new Profile("John", "Developer", "Java", "City",
                 "j@test.com", "123", "Hero text");
-        profile.getSocialLinks().add(new SocialLink("github", "https://github.com/j", "GitHub"));
+        SocialLink link = new SocialLink("github", "https://github.com/j", "GitHub");
+        link.setProfile(profile);
+        profile.getSocialLinks().add(link);
 
         ProfileResponse response = ProfileResponse.fromProfile(profile);
 
@@ -34,8 +36,12 @@ class DtoMappingTest {
     void projectResponse_mapsAllFieldsIncludingTechnologies() {
         Project project = new Project("p1", "Project", "Desc", "done",
                 "https://github.com/test", "Overview", "Arch", "Test");
-        project.getTechnologies().add(new ProjectTechnology("Java", TechnologyCategory.language));
-        project.getTechnologies().add(new ProjectTechnology("MySQL", TechnologyCategory.database));
+        ProjectTechnology t1 = new ProjectTechnology("Java", TechnologyCategory.language);
+        t1.setProject(project);
+        ProjectTechnology t2 = new ProjectTechnology("MySQL", TechnologyCategory.database);
+        t2.setProject(project);
+        project.getTechnologies().add(t1);
+        project.getTechnologies().add(t2);
 
         ProjectResponse response = ProjectResponse.fromProject(project);
 
@@ -58,7 +64,9 @@ class DtoMappingTest {
     void projectResponse_handlesNullCategory() {
         Project project = new Project("p1", "Project", "Desc", "done",
                 "https://github.com/test", "Overview", "Arch", "Test");
-        project.getTechnologies().add(new ProjectTechnology("Tool", null));
+        ProjectTechnology t = new ProjectTechnology("Tool", null);
+        t.setProject(project);
+        project.getTechnologies().add(t);
 
         ProjectResponse response = ProjectResponse.fromProject(project);
 
@@ -113,7 +121,11 @@ class DtoMappingTest {
     @Test
     void skillCategoryResponse_mapsAllFields() {
         SkillCategory cat = new SkillCategory("java", "Java", "Core Java", SkillEmphasis.primary);
-        cat.getSkills().addAll(List.of("Java", "OOP"));
+        CategorySkill s1 = new CategorySkill("Java");
+        s1.setCategory(cat);
+        CategorySkill s2 = new CategorySkill("OOP");
+        s2.setCategory(cat);
+        cat.getSkills().addAll(List.of(s1, s2));
 
         SkillCategoryResponse response = SkillCategoryResponse.fromCategory(cat);
 

@@ -35,9 +35,15 @@ class ProfileControllerTest {
         Profile profile = new Profile(
                 "Test User", "Backend Developer", "Java", "Test City",
                 "test@example.com", "1234567890", "Hello world");
-        profile.getSocialLinks().add(new SocialLink("github", "https://github.com/test", "GitHub"));
-        profile.getSocialLinks().add(new SocialLink("linkedin", "https://linkedin.com/test", "LinkedIn"));
+        addLink(profile, "github", "https://github.com/test", "GitHub");
+        addLink(profile, "linkedin", "https://linkedin.com/test", "LinkedIn");
         return profile;
+    }
+
+    private void addLink(Profile profile, String platform, String href, String label) {
+        SocialLink link = new SocialLink(platform, href, label);
+        link.setProfile(profile);
+        profile.getSocialLinks().add(link);
     }
 
     @Test

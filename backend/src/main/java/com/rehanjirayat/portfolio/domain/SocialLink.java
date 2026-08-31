@@ -2,9 +2,17 @@ package com.rehanjirayat.portfolio.domain;
 
 import jakarta.persistence.*;
 
-@Embeddable
+@Entity
+@Table(name = "profile_social_links")
+@IdClass(SocialLinkId.class)
 public class SocialLink {
 
+    @Id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id", nullable = false)
+    private Profile profile;
+
+    @Id
     @Column(nullable = false, length = 20)
     private String platform;
 
@@ -21,6 +29,14 @@ public class SocialLink {
         this.platform = platform;
         this.href = href;
         this.label = label;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public String getPlatform() {
