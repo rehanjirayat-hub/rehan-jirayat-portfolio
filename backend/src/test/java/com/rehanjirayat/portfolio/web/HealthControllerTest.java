@@ -32,4 +32,11 @@ class HealthControllerTest {
         mockMvc.perform(get("/api/health"))
                 .andExpect(content().contentType("application/json"));
     }
+
+    @Test
+    void uptimeHealth_returnsOkPlainText() throws Exception {
+        mockMvc.perform(get("/health"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("OK"));
+    }
 }
