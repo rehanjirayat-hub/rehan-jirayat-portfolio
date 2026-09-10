@@ -1097,6 +1097,9 @@ a {
   border-top: 1px solid rgb(155 178 174 / 10%);
   background: linear-gradient(180deg, rgb(10 16 16 / 30%), rgb(14 26 25 / 34%));
   padding-block: 5rem;
+  /* Timeline cards animate in from the side; clip the pre-animation offset so the
+     page never gets a horizontal scrollbar before the cards scroll into view. */
+  overflow-x: clip;
 }
 
 .education-timeline {

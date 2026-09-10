@@ -1,7 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import type { MouseEvent as ReactMouseEvent } from 'react'
 import { navigationItems } from '../../data/navigation'
+import type { NavigationItem } from '../../types/navigation'
 import { useProfile } from '../../hooks/useProfile'
 import { classNames } from '../../utils/classNames'
 import { Container } from '../common/Container'
@@ -9,6 +11,7 @@ import { Container } from '../common/Container'
 export function Navbar() {
   const { profile } = useProfile()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const scrollFallbackTimer = useRef<number | null>(null)
 
   useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => {
@@ -20,6 +23,34 @@ export function Navbar() {
     window.addEventListener('keydown', closeOnEscape)
     return () => window.removeEventListener('keydown', closeOnEscape)
   }, [])
+
+  useEffect(
+    () => () => {
+      if (scrollFallbackTimer.current !== null) {
+        window.clearTimeout(scrollFallbackTimer.current)
+      }
+    },
+    [],
+  )
+
+  /** The menu exit animation can swallow the browser's fragment scroll, so scroll
+      explicitly once the menu has closed. */
+  const handleMobileNavClick = (event: ReactMouseEvent<HTMLAnchorElement>, item: NavigationItem) => {
+    setIsMenuOpen(false)
+    if (item.isExternal) return
+
+    event.preventDefault()
+    if (scrollFallbackTimer.current !== null) {
+      window.clearTimeout(scrollFallbackTimer.current)
+    }
+    scrollFallbackTimer.current = window.setTimeout(() => {
+      const target = document.querySelector(item.href)
+      if (!target) return
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
+      window.history.replaceState(null, '', item.href)
+    }, 220)
+  }
 
   return (
     <header className="site-header">
@@ -72,7 +103,7 @@ export function Navbar() {
                   className="mobile-navigation-link"
                   href={item.href}
                   key={item.href}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(event) => handleMobileNavClick(event, item)}
                   target={item.isExternal ? '_blank' : undefined}
                   rel={item.isExternal ? 'noopener noreferrer' : undefined}
                 >
