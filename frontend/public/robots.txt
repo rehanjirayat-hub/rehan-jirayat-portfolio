@@ -2,5 +2,4 @@
 User-agent: *
 Allow: /
 
-# TODO: Uncomment and replace with your actual production domain
-# Sitemap: https://YOUR_DOMAIN.com/sitemap.xml
+Sitemap: https://rehan-jirayat-portfolio.vercel.app/sitemap.xml
