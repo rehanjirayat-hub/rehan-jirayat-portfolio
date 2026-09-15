@@ -82,6 +82,18 @@ public class Profile {
         return heroStatement;
     }
 
+    public void updateContent(String name, String role, String specialization,
+                              String location, String email, String phone,
+                              String heroStatement) {
+        this.name = name;
+        this.role = role;
+        this.specialization = specialization;
+        this.location = location;
+        this.email = email;
+        this.phone = phone;
+        this.heroStatement = heroStatement;
+    }
+
     public List<SocialLink> getSocialLinks() {
         return socialLinks;
     }

@@ -101,4 +101,20 @@ public class Education {
     public String getWebsite() {
         return website;
     }
+
+    public void updateContent(String degree, String institution, String university,
+                              String location, int startYear, int endYear,
+                              Integer expectedEndYear, String status, int cgpa,
+                              String website) {
+        this.degree = degree;
+        this.institution = institution;
+        this.university = university;
+        this.location = location;
+        this.startYear = startYear;
+        this.endYear = endYear;
+        this.expectedEndYear = expectedEndYear;
+        this.status = status;
+        this.cgpa = cgpa;
+        this.website = website;
+    }
 }

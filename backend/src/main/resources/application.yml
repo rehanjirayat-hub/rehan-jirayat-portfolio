@@ -16,6 +16,12 @@ spring:
 server:
   port: ${SERVER_PORT:8080}
 
+admin:
+  username: ${ADMIN_USERNAME:}
+  password-hash: ${ADMIN_PASSWORD_HASH:}
+  jwt-secret: ${ADMIN_JWT_SECRET:}
+  jwt-ttl-minutes: ${ADMIN_JWT_TTL_MINUTES:60}
+
 contact:
   notification-email: ${CONTACT_NOTIFICATION_EMAIL:}
 

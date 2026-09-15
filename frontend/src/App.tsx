@@ -6,6 +6,7 @@ import { SkillsSection } from './pages/SkillsSection'
 import { EducationSection } from './pages/EducationSection'
 import { ContactSection } from './pages/ContactPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { AdminPage } from './pages/AdminPage'
 
 /** Only the root path is a valid route for this single-page portfolio. */
 function isValidRoute(pathname: string): boolean {
@@ -13,6 +14,10 @@ function isValidRoute(pathname: string): boolean {
 }
 
 export function App() {
+  if (window.location.pathname === '/admin' || window.location.pathname === '/admin/') {
+    return <AdminPage />
+  }
+
   const content = isValidRoute(window.location.pathname) ? (
     <>
       <HomePage />

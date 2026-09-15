@@ -54,4 +54,10 @@ public class SkillCategory {
     public List<CategorySkill> getSkills() {
         return skills;
     }
+
+    public void updateContent(String title, String description, SkillEmphasis emphasis) {
+        this.title = title;
+        this.description = description;
+        this.emphasis = emphasis;
+    }
 }

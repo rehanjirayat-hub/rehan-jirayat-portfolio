@@ -86,4 +86,16 @@ public class Project {
     public String getTesting() {
         return testing;
     }
+
+    public void updateContent(String name, String description, String status,
+                              String githubUrl, String overview, String architecture,
+                              String testing) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.githubUrl = githubUrl;
+        this.overview = overview;
+        this.architecture = architecture;
+        this.testing = testing;
+    }
 }
