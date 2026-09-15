@@ -14,7 +14,12 @@ function isValidRoute(pathname: string): boolean {
 }
 
 export function App() {
-  if (window.location.pathname === '/admin' || window.location.pathname === '/admin/') {
+  if (
+    window.location.pathname === '/admin' ||
+    window.location.pathname === '/admin/' ||
+    window.location.pathname === '/admin/profile' ||
+    window.location.pathname === '/admin/profile/'
+  ) {
     return <AdminPage />
   }
 
