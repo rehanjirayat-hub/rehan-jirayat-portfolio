@@ -10,7 +10,9 @@ public record SkillCategoryResponse(
         String title,
         String description,
         String emphasis,
-        List<String> skills
+        List<String> skills,
+        boolean visible,
+        int displayOrder
 ) {
     public static SkillCategoryResponse fromCategory(SkillCategory cat) {
         return new SkillCategoryResponse(
@@ -18,7 +20,9 @@ public record SkillCategoryResponse(
                 cat.getTitle(),
                 cat.getDescription(),
                 cat.getEmphasis().name(),
-                cat.getSkills().stream().map(CategorySkill::getSkill).toList()
+                cat.getSkills().stream().map(CategorySkill::getSkill).toList(),
+                cat.isVisible(),
+                cat.getDisplayOrder()
         );
     }
 }

@@ -25,6 +25,10 @@ public class SkillCategory {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<CategorySkill> skills = new ArrayList<>();
 
+    private Boolean visible = true;
+
+    private Integer displayOrder = 0;
+
     protected SkillCategory() {
     }
 
@@ -55,9 +59,15 @@ public class SkillCategory {
         return skills;
     }
 
-    public void updateContent(String title, String description, SkillEmphasis emphasis) {
+    public boolean isVisible() { return visible == null || visible; }
+    public int getDisplayOrder() { return displayOrder == null ? 0 : displayOrder; }
+
+    public void updateContent(String title, String description, SkillEmphasis emphasis,
+                              Boolean visible, Integer displayOrder) {
         this.title = title;
         this.description = description;
         this.emphasis = emphasis;
+        this.visible = visible;
+        this.displayOrder = displayOrder;
     }
 }

@@ -13,7 +13,9 @@ public record EducationResponse(
         Integer expectedEndYear,
         String status,
         int cgpa,
-        String website
+        String website,
+        boolean visible,
+        int displayOrder
 ) {
     public static EducationResponse fromEducation(Education edu) {
         return new EducationResponse(
@@ -27,7 +29,9 @@ public record EducationResponse(
                 edu.getExpectedEndYear(),
                 edu.getStatus(),
                 edu.getCgpa(),
-                edu.getWebsite()
+                edu.getWebsite(),
+                edu.isVisible(),
+                edu.getDisplayOrder()
         );
     }
 }

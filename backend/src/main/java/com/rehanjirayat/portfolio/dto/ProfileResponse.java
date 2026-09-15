@@ -4,6 +4,7 @@ import com.rehanjirayat.portfolio.domain.Profile;
 import com.rehanjirayat.portfolio.domain.SocialLink;
 
 import java.util.List;
+import java.util.Comparator;
 
 public record ProfileResponse(
         String name,
@@ -18,12 +19,20 @@ public record ProfileResponse(
     public record SocialLinkDto(
             String platform,
             String href,
-            String label
-    ) {}
+            String label,
+            boolean visible,
+            int displayOrder
+        ) {
+                public static SocialLinkDto fromLink(SocialLink link) {
+                        return new SocialLinkDto(link.getPlatform(), link.getHref(), link.getLabel(), link.isVisible(), link.getDisplayOrder());
+                }
+        }
 
     public static ProfileResponse fromProfile(Profile profile) {
         List<SocialLinkDto> links = profile.getSocialLinks().stream()
-                .map(sl -> new SocialLinkDto(sl.getPlatform(), sl.getHref(), sl.getLabel()))
+                .filter(SocialLink::isVisible)
+                .sorted(Comparator.comparingInt(SocialLink::getDisplayOrder))
+                .map(sl -> new SocialLinkDto(sl.getPlatform(), sl.getHref(), sl.getLabel(), sl.isVisible(), sl.getDisplayOrder()))
                 .toList();
 
         return new ProfileResponse(

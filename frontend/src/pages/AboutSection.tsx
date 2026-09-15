@@ -5,9 +5,11 @@ import { Container } from '../components/common/Container'
 import { LearningJourney } from '../components/common/LearningJourney'
 import { ButtonLink } from '../components/ui/Button'
 import { useProfile } from '../hooks/useProfile'
+import { useSiteContent } from '../hooks/useSiteContent'
 
 export function AboutSection() {
   const { profile, isLoading, error } = useProfile()
+  const { content } = useSiteContent()
   const shouldReduceMotion = useReducedMotion()
 
   if (isLoading) {
@@ -57,22 +59,18 @@ export function AboutSection() {
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
           >
-            <p className="eyebrow">About</p>
+            <p className="eyebrow">{content.aboutEyebrow}</p>
 
             <h2 id="about-title">
-              Building toward thoughtful Java backend development.
+              {content.aboutHeading}
             </h2>
 
             <p>
-              I&apos;m {profile.name}, an MCA student and {profile.role} focused
-              on building practical backend systems with Java, Spring Boot,
-              REST APIs, and database-driven application design.
+              {content.aboutParagraphOne.replace('Mohammad Rehan Jirayat', profile.name).replace('Java Backend Developer', profile.role)}
             </p>
 
             <p>
-              My development journey includes Core Java, JDBC, MySQL, layered
-              architecture, Spring Data JPA, Spring Security, testing, and
-              clean backend engineering through hands-on project work.
+              {content.aboutParagraphTwo}
             </p>
 
             <motion.div
@@ -80,8 +78,8 @@ export function AboutSection() {
               whileHover={shouldReduceMotion ? undefined : { y: -2 }}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
             >
-              <ButtonLink href="#projects" variant="secondary">
-                Explore my projects
+              <ButtonLink href={content.aboutCtaUrl} variant="secondary">
+                {content.aboutCtaLabel}
                 <ArrowRight aria-hidden="true" size={16} />
               </ButtonLink>
             </motion.div>

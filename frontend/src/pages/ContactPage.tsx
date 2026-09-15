@@ -6,14 +6,17 @@ import { SectionHeading } from '../components/common/SectionHeading'
 import { ResumeSection } from '../components/common/ResumeSection'
 import { ContactForm } from '../components/common/ContactForm'
 import { ContactDetails } from '../components/common/ContactDetails'
+import { useSiteContent } from '../hooks/useSiteContent'
 
 export function ContactSection() {
   const shouldReduceMotion = useReducedMotion()
+  const { content } = useSiteContent()
+  const showResume = content.sections.find((section) => section.id === 'resume')?.visible ?? true
 
   return (
     <>
       {/* Resume Section */}
-      <section id="resume" className="resume-section" aria-labelledby="resume-heading">
+      {showResume ? <section id="resume" className="resume-section" aria-labelledby="resume-heading">
         <Container>
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
@@ -31,7 +34,7 @@ export function ContactSection() {
 
           <ResumeSection />
         </Container>
-      </section>
+      </section> : null}
 
       {/* Contact Section */}
       <section id="contact" className="contact-section" aria-labelledby="contact-heading">
@@ -44,8 +47,8 @@ export function ContactSection() {
           >
             <SectionHeading
               eyebrow="GET IN TOUCH"
-              title="Contact"
-              description="Have a question or want to work together? Send me a message and I'll get back to you."
+              title={content.contactHeading}
+              description={content.contactDescription}
               titleId="contact-heading"
             />
           </motion.div>

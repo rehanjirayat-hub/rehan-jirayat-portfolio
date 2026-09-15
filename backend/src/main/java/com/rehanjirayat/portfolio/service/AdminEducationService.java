@@ -24,7 +24,8 @@ public class AdminEducationService {
                         request.location(), request.startYear(), request.endYear(), request.expectedEndYear(),
                         request.status(), request.cgpa(), request.website()));
         education.updateContent(request.degree(), request.institution(), request.university(), request.location(),
-                request.startYear(), request.endYear(), request.expectedEndYear(), request.status(), request.cgpa(), request.website());
+            request.startYear(), request.endYear(), request.expectedEndYear(), request.status(), request.cgpa(), request.website(),
+            request.visible(), request.displayOrder());
         return repository.save(education);
     }
 

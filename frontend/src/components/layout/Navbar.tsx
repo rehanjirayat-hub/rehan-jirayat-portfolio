@@ -2,14 +2,16 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import type { MouseEvent as ReactMouseEvent } from 'react'
-import { navigationItems } from '../../data/navigation'
 import type { NavigationItem } from '../../types/navigation'
 import { useProfile } from '../../hooks/useProfile'
 import { classNames } from '../../utils/classNames'
 import { Container } from '../common/Container'
+import { useSiteContent } from '../../hooks/useSiteContent'
 
 export function Navbar() {
   const { profile } = useProfile()
+  const { content } = useSiteContent()
+  const navigationItems = content.navigation.filter((item) => item.visible).sort((a, b) => a.displayOrder - b.displayOrder)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const scrollFallbackTimer = useRef<number | null>(null)
 

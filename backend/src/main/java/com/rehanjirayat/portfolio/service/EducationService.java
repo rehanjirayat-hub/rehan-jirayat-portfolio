@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Comparator;
 
 @Service
 public class EducationService {
@@ -17,7 +18,10 @@ public class EducationService {
     }
 
     public List<Education> findAll() {
-        return repository.findAll();
+        return repository.findAll().stream()
+            .filter(Education::isVisible)
+            .sorted(Comparator.comparingInt(Education::getDisplayOrder))
+            .toList();
     }
 
     public Education findById(String id) {

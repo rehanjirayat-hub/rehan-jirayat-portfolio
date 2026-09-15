@@ -5,6 +5,7 @@ import com.rehanjirayat.portfolio.repository.SkillCategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Comparator;
 
 @Service
 public class SkillCategoryService {
@@ -16,6 +17,9 @@ public class SkillCategoryService {
     }
 
     public List<SkillCategory> findAll() {
-        return repository.findAll();
+        return repository.findAll().stream()
+            .filter(SkillCategory::isVisible)
+            .sorted(Comparator.comparingInt(SkillCategory::getDisplayOrder))
+            .toList();
     }
 }

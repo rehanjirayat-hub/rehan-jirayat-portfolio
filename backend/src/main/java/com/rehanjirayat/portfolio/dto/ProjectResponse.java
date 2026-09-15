@@ -14,7 +14,9 @@ public record ProjectResponse(
         String githubUrl,
         String overview,
         String architecture,
-        String testing
+        String testing,
+        boolean visible,
+        int displayOrder
 ) {
     public record TechnologyDto(
             String name,
@@ -36,7 +38,9 @@ public record ProjectResponse(
                 project.getGithubUrl(),
                 project.getOverview(),
                 project.getArchitecture(),
-                project.getTesting()
+                project.getTesting(),
+                project.isVisible(),
+                project.getDisplayOrder()
         );
     }
 }

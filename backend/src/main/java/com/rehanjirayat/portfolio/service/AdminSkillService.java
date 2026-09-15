@@ -22,7 +22,7 @@ public class AdminSkillService {
     public SkillCategory save(AdminSkillCategoryRequest request) {
         SkillCategory category = repository.findById(request.id())
                 .orElseGet(() -> new SkillCategory(request.id(), request.title(), request.description(), request.emphasis()));
-        category.updateContent(request.title(), request.description(), request.emphasis());
+        category.updateContent(request.title(), request.description(), request.emphasis(), request.visible(), request.displayOrder());
         category.getSkills().clear();
         if (request.skills() != null) {
             request.skills().forEach(skill -> {

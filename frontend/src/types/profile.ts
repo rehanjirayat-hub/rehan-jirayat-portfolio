@@ -1,9 +1,11 @@
-export type SocialPlatform = 'github' | 'linkedin' | 'leetcode' | 'email'
+export type SocialPlatform = string
 
 export interface SocialLink {
   href: string
   label: string
   platform: SocialPlatform
+  visible?: boolean
+  displayOrder?: number
 }
 
 export interface PortfolioProfile {

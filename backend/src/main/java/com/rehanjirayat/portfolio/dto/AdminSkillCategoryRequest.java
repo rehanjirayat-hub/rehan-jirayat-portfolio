@@ -12,6 +12,8 @@ public record AdminSkillCategoryRequest(
         @NotBlank @Size(max = 100) String title,
         @NotBlank @Size(max = 200) String description,
         @NotNull SkillEmphasis emphasis,
-        List<@NotBlank @Size(max = 255) String> skills
+        List<@NotBlank @Size(max = 255) String> skills,
+        Boolean visible,
+        Integer displayOrder
 ) {
 }

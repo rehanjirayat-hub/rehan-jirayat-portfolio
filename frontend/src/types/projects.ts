@@ -13,6 +13,8 @@ export interface Project {
   overview: string
   architecture: string
   testing: string
+  visible?: boolean
+  displayOrder?: number
 }
 
 export type ProjectId = string

@@ -14,4 +14,6 @@ export interface SkillCategory {
   description: string
   skills: string[]
   emphasis: 'primary' | 'secondary' | 'supporting'
+  visible?: boolean
+  displayOrder?: number
 }

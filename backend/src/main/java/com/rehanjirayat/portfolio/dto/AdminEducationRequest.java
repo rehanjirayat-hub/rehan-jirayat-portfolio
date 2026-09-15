@@ -16,6 +16,8 @@ public record AdminEducationRequest(
         Integer expectedEndYear,
         @NotBlank @Size(max = 50) String status,
         @Min(0) int cgpa,
-        @Size(max = 500) String website
+        @Size(max = 500) String website,
+        Boolean visible,
+        Integer displayOrder
 ) {
 }

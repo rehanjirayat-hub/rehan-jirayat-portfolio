@@ -7,10 +7,13 @@ import { SectionHeading } from '../components/common/SectionHeading'
 import { EducationCard } from '../components/common/EducationCard'
 import { CertificationsSection } from '../components/common/CertificationsSection'
 import { useEducation } from '../hooks/useEducation'
+import { useSiteContent } from '../hooks/useSiteContent'
 
 export function EducationSection() {
   const shouldReduceMotion = useReducedMotion()
   const { education: educationData, isLoading, error } = useEducation()
+  const { content } = useSiteContent()
+  const showCertifications = content.sections.find((section) => section.id === 'certifications')?.visible ?? true
 
   return (
     <section id="education" className="education-section" aria-labelledby="education-heading">
@@ -70,7 +73,7 @@ export function EducationSection() {
       </Container>
 
       {/* Certifications Section */}
-      <section id="certifications" className="certifications-section-wrapper" aria-labelledby="certifications-heading">
+      {showCertifications ? <section id="certifications" className="certifications-section-wrapper" aria-labelledby="certifications-heading">
         <Container>
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
@@ -88,7 +91,7 @@ export function EducationSection() {
 
           <CertificationsSection />
         </Container>
-      </section>
+      </section> : null}
     </section>
   )
 }

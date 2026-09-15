@@ -24,13 +24,15 @@ public class AdminProjectService {
                 .orElseGet(() -> new Project(request.id(), request.name(), request.description(), request.status(),
                         request.githubUrl(), request.overview(), request.architecture(), request.testing()));
         project.updateContent(request.name(), request.description(), request.status(), request.githubUrl(),
-                request.overview(), request.architecture(), request.testing());
+            request.overview(), request.architecture(), request.testing(), request.visible(), request.displayOrder());
         project.getTechnologies().clear();
-        request.technologies().forEach(technology -> {
-            ProjectTechnology entity = new ProjectTechnology(technology.name(), technology.category());
-            entity.setProject(project);
-            project.getTechnologies().add(entity);
-        });
+        if (request.technologies() != null) {
+            request.technologies().forEach(technology -> {
+                ProjectTechnology entity = new ProjectTechnology(technology.name(), technology.category());
+                entity.setProject(project);
+                project.getTechnologies().add(entity);
+            });
+        }
         return projectRepository.save(project);
     }
 

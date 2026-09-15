@@ -39,12 +39,23 @@ public class Education {
     @Column(length = 500)
     private String website;
 
+    private Boolean visible = true;
+
+    private Integer displayOrder = 0;
+
     protected Education() {
     }
 
     public Education(String id, String degree, String institution, String university,
                      String location, int startYear, int endYear, Integer expectedEndYear,
                      String status, int cgpa, String website) {
+        this(id, degree, institution, university, location, startYear, endYear, expectedEndYear,
+                status, cgpa, website, true, 0);
+    }
+
+    public Education(String id, String degree, String institution, String university,
+                     String location, int startYear, int endYear, Integer expectedEndYear,
+                     String status, int cgpa, String website, Boolean visible, Integer displayOrder) {
         this.id = id;
         this.degree = degree;
         this.institution = institution;
@@ -56,6 +67,8 @@ public class Education {
         this.status = status;
         this.cgpa = cgpa;
         this.website = website;
+        this.visible = visible;
+        this.displayOrder = displayOrder;
     }
 
     public String getId() {
@@ -102,10 +115,13 @@ public class Education {
         return website;
     }
 
+    public boolean isVisible() { return visible == null || visible; }
+    public int getDisplayOrder() { return displayOrder == null ? 0 : displayOrder; }
+
     public void updateContent(String degree, String institution, String university,
                               String location, int startYear, int endYear,
                               Integer expectedEndYear, String status, int cgpa,
-                              String website) {
+                              String website, Boolean visible, Integer displayOrder) {
         this.degree = degree;
         this.institution = institution;
         this.university = university;
@@ -116,5 +132,7 @@ public class Education {
         this.status = status;
         this.cgpa = cgpa;
         this.website = website;
+        this.visible = visible;
+        this.displayOrder = displayOrder;
     }
 }

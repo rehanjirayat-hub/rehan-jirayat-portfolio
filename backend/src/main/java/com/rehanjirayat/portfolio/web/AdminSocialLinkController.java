@@ -4,6 +4,7 @@ import com.rehanjirayat.portfolio.dto.AdminSocialLinkRequest;
 import com.rehanjirayat.portfolio.dto.ProfileResponse;
 import com.rehanjirayat.portfolio.service.AdminSocialLinkService;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,9 @@ public class AdminSocialLinkController {
     public AdminSocialLinkController(AdminSocialLinkService service) {
         this.service = service;
     }
+
+    @GetMapping
+    public List<ProfileResponse.SocialLinkDto> findAll() { return service.findAll(); }
 
     @PutMapping
     public ProfileResponse replaceLinks(

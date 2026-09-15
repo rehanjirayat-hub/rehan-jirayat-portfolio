@@ -1,12 +1,13 @@
-import { Code2, Github, Linkedin, Mail } from 'lucide-react'
+import { Code2, Github, Linkedin, Link, Mail } from 'lucide-react'
 import { useProfile } from '../../hooks/useProfile'
-import type { SocialLink, SocialPlatform } from '../../types/profile'
+import type { SocialLink } from '../../types/profile'
 
-const socialIcons: Record<SocialPlatform, typeof Github> = {
+const socialIcons: Record<string, typeof Github> = {
   github: Github,
   linkedin: Linkedin,
   leetcode: Code2,
   email: Mail,
+  website: Link,
 }
 
 function isExternalLink(link: SocialLink) {
@@ -21,7 +22,7 @@ export function SocialLinks() {
   return (
     <div className="social-links" aria-label="Professional profiles">
       {profile.socialLinks.map((link) => {
-        const Icon = socialIcons[link.platform]
+        const Icon = socialIcons[link.platform] ?? Link
         const isExternal = isExternalLink(link)
 
         return (

@@ -5,12 +5,13 @@ import { BackendVisual } from '../components/common/BackendVisual'
 import { SocialLinks } from '../components/common/SocialLinks'
 import { ButtonLink } from '../components/ui/Button'
 import { useProfile } from '../hooks/useProfile'
+import { useSiteContent } from '../hooks/useSiteContent'
 
-const RESUME_PATH = '/resume/Mohammad_Rehan_Jirayat_Resume.pdf'
 const RESUME_FILENAME = 'Mohammad_Rehan_Jirayat_Resume.pdf'
 
 export function HomePage() {
   const { profile, isLoading, error } = useProfile()
+  const { content } = useSiteContent()
   const shouldReduceMotion = useReducedMotion()
 
   if (isLoading) {
@@ -52,9 +53,9 @@ export function HomePage() {
           animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          <p className="eyebrow">{profile.specialization}</p>
+          <p className="eyebrow">{content.heroSubtitle || profile.specialization}</p>
           <h1 id="hero-title">Hi, I&apos;m {profile.name}.</h1>
-          <p className="hero-role">{profile.role}</p>
+          <p className="hero-role">{content.professionalTitle || profile.role}</p>
           <p className="hero-description">{profile.heroStatement}</p>
           <p className="hero-location">{profile.location}</p>
           <div className="hero-actions">
@@ -62,14 +63,14 @@ export function HomePage() {
               whileHover={shouldReduceMotion ? undefined : { y: -2 }}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
             >
-              <ButtonLink href="#projects">View Projects</ButtonLink>
+              <ButtonLink href={content.heroPrimaryCtaUrl}>{content.heroPrimaryCtaLabel}</ButtonLink>
             </motion.div>
             <motion.div
               whileHover={shouldReduceMotion ? undefined : { y: -2 }}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
             >
-              <ButtonLink variant="secondary" href={RESUME_PATH} download={RESUME_FILENAME}>
-                Download Resume
+              <ButtonLink variant="secondary" href={content.heroSecondaryCtaUrl} download={content.heroSecondaryCtaUrl.endsWith('.pdf') ? RESUME_FILENAME : undefined}>
+                {content.heroSecondaryCtaLabel}
               </ButtonLink>
             </motion.div>
           </div>

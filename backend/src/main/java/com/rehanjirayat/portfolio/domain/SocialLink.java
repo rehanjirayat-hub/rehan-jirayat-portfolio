@@ -22,6 +22,10 @@ public class SocialLink {
     @Column(nullable = false, length = 100)
     private String label;
 
+    private Boolean visible = true;
+
+    private Integer displayOrder = 0;
+
     protected SocialLink() {
     }
 
@@ -53,5 +57,15 @@ public class SocialLink {
 
     public String getLabel() {
         return label;
+    }
+
+    public boolean isVisible() { return visible == null || visible; }
+    public int getDisplayOrder() { return displayOrder == null ? 0 : displayOrder; }
+
+    public void updateContent(String href, String label, Boolean visible, Integer displayOrder) {
+        this.href = href;
+        this.label = label;
+        this.visible = visible;
+        this.displayOrder = displayOrder;
     }
 }

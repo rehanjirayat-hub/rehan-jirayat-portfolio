@@ -12,6 +12,8 @@ export interface Education {
   status: EducationStatus
   cgpa: number
   website?: string
+  visible?: boolean
+  displayOrder?: number
 }
 
 export interface Certification {

@@ -139,3 +139,5 @@
 }
 
 .admin-record strong { color: #267e6d; }
+.admin-panel-action { max-width: 72rem; margin: 0 auto .75rem; text-align: right; }
+.admin-danger-button { width: fit-content; padding: .5rem .75rem; border: 1px solid #d4a09b; border-radius: 4px; background: #fff7f6; color: #9c332a; font: inherit; font-weight: 700; cursor: pointer; }

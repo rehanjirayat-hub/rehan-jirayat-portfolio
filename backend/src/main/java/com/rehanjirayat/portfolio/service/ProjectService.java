@@ -5,6 +5,7 @@ import com.rehanjirayat.portfolio.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Comparator;
 
 @Service
 public class ProjectService {
@@ -16,7 +17,10 @@ public class ProjectService {
     }
 
     public List<Project> findAll() {
-        return repository.findAll();
+        return repository.findAll().stream()
+            .filter(Project::isVisible)
+            .sorted(Comparator.comparingInt(Project::getDisplayOrder))
+            .toList();
     }
 
     public Project findById(String id) {
