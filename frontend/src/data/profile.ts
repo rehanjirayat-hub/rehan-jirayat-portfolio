@@ -18,7 +18,7 @@ export const profile: PortfolioProfile = {
     {
       platform: 'linkedin',
       label: 'LinkedIn profile',
-      href: 'https://www.linkedin.com/in/rehan-jirat-5683573a2/',
+      href: 'https://www.linkedin.com/in/mohammad-rehan-jirayat-5683573a2/',
     },
     {
       platform: 'leetcode',
