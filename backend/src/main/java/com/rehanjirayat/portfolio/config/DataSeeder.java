@@ -51,6 +51,7 @@ public class DataSeeder implements CommandLineRunner {
             seedProfile();
             log.info("Seed data loaded: profile");
         } else {
+            updateLinkedInProfileUrl();
             log.info("Profiles table already has {} rows — skipping seed", profileRepository.count());
         }
 
@@ -127,10 +128,26 @@ public class DataSeeder implements CommandLineRunner {
                 "I build secure, scalable, and maintainable backend applications using Java and Spring Boot."
         );
         addLink(profile, "github", "https://github.com/rehanjirayat-hub", "GitHub profile");
-        addLink(profile, "linkedin", "https://www.linkedin.com/in/rehan-jirat-5683573a2/", "LinkedIn profile");
+        addLink(profile, "linkedin", "https://www.linkedin.com/in/mohammad-rehan-jirayat-5683573a2/", "LinkedIn profile");
         addLink(profile, "leetcode", "https://leetcode.com/u/sKGBJtR8N6/", "LeetCode profile");
         addLink(profile, "email", "mailto:rehanjirayat@gmail.com", "Email Mohammad Rehan Jirayat");
         profileRepository.save(profile);
+    }
+
+    private void updateLinkedInProfileUrl() {
+        profileRepository.findAll().stream()
+                .findFirst()
+                .ifPresent(profile -> profile.getSocialLinks().stream()
+                        .filter(link -> "linkedin".equals(link.getPlatform()))
+                        .findFirst()
+                        .ifPresent(link -> {
+                            String linkedinUrl = "https://www.linkedin.com/in/mohammad-rehan-jirayat-5683573a2/";
+                            if (!linkedinUrl.equals(link.getHref())) {
+                                link.setHref(linkedinUrl);
+                                profileRepository.save(profile);
+                                log.info("Updated LinkedIn profile URL");
+                            }
+                        }));
     }
 
     private void addLink(Profile profile, String platform, String href, String label) {

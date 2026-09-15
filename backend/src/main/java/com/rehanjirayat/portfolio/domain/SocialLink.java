@@ -47,6 +47,10 @@ public class SocialLink {
         return href;
     }
 
+    public void setHref(String href) {
+        this.href = href;
+    }
+
     public String getLabel() {
         return label;
     }

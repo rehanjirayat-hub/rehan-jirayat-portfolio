@@ -1,6 +1,8 @@
 package com.rehanjirayat.portfolio.config;
 
 import com.rehanjirayat.portfolio.repository.*;
+import com.rehanjirayat.portfolio.domain.Profile;
+import com.rehanjirayat.portfolio.domain.SocialLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,10 +43,19 @@ class DataSeederTest {
     }
 
     @Test
-    void run_skipsProfileWhenAlreadySeeded() {
+    void run_updatesLinkedInProfileWhenAlreadySeeded() {
+        Profile profile = new Profile("Name", "Role", "Specialization", "Location", "email", "phone", "Statement");
+        SocialLink linkedin = new SocialLink("linkedin", "https://www.linkedin.com/in/rehan-jirat-5683573a2/", "LinkedIn profile");
+        linkedin.setProfile(profile);
+        profile.getSocialLinks().add(linkedin);
+        when(profileRepository.findAll()).thenReturn(java.util.List.of(profile));
+
         dataSeeder.run();
 
-        verify(profileRepository, never()).save(any());
+        verify(profileRepository).save(profile);
+        org.junit.jupiter.api.Assertions.assertEquals(
+                "https://www.linkedin.com/in/mohammad-rehan-jirayat-5683573a2/",
+                linkedin.getHref());
     }
 
     @Test
