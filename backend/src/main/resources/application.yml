@@ -13,6 +13,11 @@ spring:
     show-sql: false
     open-in-view: false
 
+  servlet:
+    multipart:
+      max-file-size: ${MULTIPART_MAX_FILE_SIZE:12MB}
+      max-request-size: ${MULTIPART_MAX_REQUEST_SIZE:15MB}
+
   flyway:
     enabled: ${FLYWAY_ENABLED:true}
     baseline-on-migrate: ${FLYWAY_BASELINE_ON_MIGRATE:true}
@@ -30,6 +35,11 @@ admin:
 
 contact:
   notification-email: ${CONTACT_NOTIFICATION_EMAIL:}
+
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME:}
+  api-key: ${CLOUDINARY_API_KEY:}
+  api-secret: ${CLOUDINARY_API_SECRET:}
 
 rate-limit:
   max-requests: ${RATE_LIMIT_MAX_REQUESTS:5}

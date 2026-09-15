@@ -4,7 +4,7 @@ import { Badge } from '../ui/Badge'
 import { Card } from '../ui/Card'
 import type { SkillCategory, SkillCategoryId } from '../../types/skills'
 
-const categoryIcons: Record<SkillCategoryId, typeof ServerCog> = {
+const categoryIcons: Partial<Record<SkillCategoryId, typeof ServerCog>> = {
   'java-backend': ServerCog,
   'spring-ecosystem': ShieldCheck,
   database: Database,
@@ -22,7 +22,7 @@ interface SkillCategoryCardProps {
 
 export function SkillCategoryCard({ category, index }: SkillCategoryCardProps) {
   const shouldReduceMotion = useReducedMotion()
-  const Icon = categoryIcons[category.id]
+  const Icon = categoryIcons[category.id] ?? Code2
 
   return (
     <motion.div

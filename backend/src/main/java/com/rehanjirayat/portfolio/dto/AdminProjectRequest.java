@@ -18,6 +18,7 @@ public record AdminProjectRequest(
         @NotBlank String overview,
         @NotBlank String architecture,
         @NotBlank String testing,
+        @Size(max = 1024) String imageUrl,
         Boolean visible,
         Integer displayOrder
 ) {

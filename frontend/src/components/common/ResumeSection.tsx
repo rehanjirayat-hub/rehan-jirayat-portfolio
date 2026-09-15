@@ -1,14 +1,38 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Download, Eye } from 'lucide-react'
 import { ButtonLink } from '../ui/Button'
+import { http } from '../../services/http'
+import type { PublicResume } from '../../types/media'
 
 const RESUME_PATH = '/resume/Mohammad_Rehan_Jirayat_Resume.pdf'
 const RESUME_FILENAME = 'Mohammad_Rehan_Jirayat_Resume.pdf'
 
 export function ResumeSection() {
   const shouldReduceMotion = useReducedMotion()
+  const [resumeUrl, setResumeUrl] = useState<string>(RESUME_PATH)
+  const [resumeFilename, setResumeFilename] = useState<string>(RESUME_FILENAME)
+
+  useEffect(() => {
+    let active = true
+    http
+      .get<PublicResume>('/api/resume')
+      .then((response) => {
+        if (!active) return
+        if (response.data.hasResume && response.data.url) {
+          setResumeUrl(response.data.url)
+          setResumeFilename(response.data.originalFilename ?? RESUME_FILENAME)
+        }
+      })
+      .catch(() => {
+        // Keep the bundled static resume as the fallback.
+      })
+    return () => {
+      active = false
+    }
+  }, [])
 
   return (
     <motion.div
@@ -31,7 +55,7 @@ export function ResumeSection() {
           >
             <ButtonLink
               variant="primary"
-              href={RESUME_PATH}
+              href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="resume-action-btn"
@@ -46,8 +70,8 @@ export function ResumeSection() {
           >
             <ButtonLink
               variant="secondary"
-              href={RESUME_PATH}
-              download={RESUME_FILENAME}
+              href={resumeUrl}
+              download={resumeFilename}
               className="resume-action-btn"
             >
               <Download size={16} aria-hidden="true" />

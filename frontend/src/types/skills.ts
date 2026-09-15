@@ -1,18 +1,11 @@
-export type SkillCategoryId =
-  | 'java-backend'
-  | 'spring-ecosystem'
-  | 'database'
-  | 'architecture'
-  | 'testing-tools'
-  | 'ides'
-  | 'devops-cloud'
-  | 'frontend'
+export type SkillCategoryId = string
 
 export interface SkillCategory {
-  id: SkillCategoryId
+  id: string
   title: string
   description: string
   skills: string[]
+
   emphasis: 'primary' | 'secondary' | 'supporting'
   visible?: boolean
   displayOrder?: number

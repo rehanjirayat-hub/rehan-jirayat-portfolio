@@ -26,7 +26,17 @@ export function ProjectCard({ project, onViewDetails, index }: ProjectCardProps)
         <div className="project-card-header">
           <div className="project-visual">
             <div className="project-visual-inner">
-              <span className="project-icon">{'</>'}</span>
+              {project.imageUrl ? (
+                <img
+                  src={project.imageUrl}
+                  alt={`${project.name} preview`}
+                  className="project-icon"
+                  loading="lazy"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }}
+                />
+              ) : (
+                <span className="project-icon">{'</>'}</span>
+              )}
             </div>
           </div>
           <div className="project-meta">

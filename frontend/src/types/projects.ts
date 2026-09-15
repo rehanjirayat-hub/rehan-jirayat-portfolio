@@ -13,6 +13,7 @@ export interface Project {
   overview: string
   architecture: string
   testing: string
+  imageUrl?: string
   visible?: boolean
   displayOrder?: number
 }

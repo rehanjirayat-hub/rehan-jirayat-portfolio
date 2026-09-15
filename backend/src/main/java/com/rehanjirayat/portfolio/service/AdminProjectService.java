@@ -24,7 +24,8 @@ public class AdminProjectService {
                 .orElseGet(() -> new Project(request.id(), request.name(), request.description(), request.status(),
                         request.githubUrl(), request.overview(), request.architecture(), request.testing()));
         project.updateContent(request.name(), request.description(), request.status(), request.githubUrl(),
-            request.overview(), request.architecture(), request.testing(), request.visible(), request.displayOrder());
+            request.overview(), request.architecture(), request.testing(), request.imageUrl(),
+            request.visible(), request.displayOrder());
         project.getTechnologies().clear();
         if (request.technologies() != null) {
             request.technologies().forEach(technology -> {

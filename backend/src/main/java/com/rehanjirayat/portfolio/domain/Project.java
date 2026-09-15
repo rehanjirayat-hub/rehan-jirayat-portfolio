@@ -36,6 +36,9 @@ public class Project {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String testing;
 
+    @Column(length = 1024)
+    private String imageUrl;
+
     private Boolean visible = true;
 
     private Integer displayOrder = 0;
@@ -91,13 +94,17 @@ public class Project {
         return testing;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public boolean isVisible() { return visible == null || visible; }
 
     public int getDisplayOrder() { return displayOrder == null ? 0 : displayOrder; }
 
     public void updateContent(String name, String description, String status,
                               String githubUrl, String overview, String architecture,
-                              String testing, Boolean visible, Integer displayOrder) {
+                              String testing, String imageUrl, Boolean visible, Integer displayOrder) {
         this.name = name;
         this.description = description;
         this.status = status;
@@ -105,6 +112,7 @@ public class Project {
         this.overview = overview;
         this.architecture = architecture;
         this.testing = testing;
+        this.imageUrl = imageUrl;
         this.visible = visible;
         this.displayOrder = displayOrder;
     }

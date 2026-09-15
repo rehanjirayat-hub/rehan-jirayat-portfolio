@@ -15,6 +15,7 @@ public record ProjectResponse(
         String overview,
         String architecture,
         String testing,
+        String imageUrl,
         boolean visible,
         int displayOrder
 ) {
@@ -39,6 +40,7 @@ public record ProjectResponse(
                 project.getOverview(),
                 project.getArchitecture(),
                 project.getTesting(),
+                project.getImageUrl(),
                 project.isVisible(),
                 project.getDisplayOrder()
         );
