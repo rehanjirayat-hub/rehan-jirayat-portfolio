@@ -30,3 +30,6 @@ npm-debug.log*
 *.sql
 *.db
 *.sqlite
+
+# Flyway migrations are version-controlled schema definitions
+!backend/src/main/resources/db/migration/*.sql
