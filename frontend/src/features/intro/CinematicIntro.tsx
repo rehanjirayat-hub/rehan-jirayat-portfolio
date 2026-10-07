@@ -2,78 +2,103 @@ import { useEffect, useLayoutEffect, useRef, useState, type PropsWithChildren } 
 import { preloadSiteData } from './preloadSiteData'
 import './intro.css'
 
-/**
- * The opening title card. Rendered as one visual element — never animated word
- * by word — and displayed in the site's uppercase hero treatment.
- */
-const INTRO_NAME = 'Mohammed Rehan Jirayat'
+const DISPLAY_NAME = 'Mohammed Rehan Jirayat'
+const APP_CLASS = 'PortfolioApplication'
+const COMMAND = 'mvn spring-boot:run'
 
 interface IntroTiming {
-  /** Earliest moment the camera may start pulling back. */
-  minHold: number
-  /** Hard limit before the reveal starts, whatever the APIs are doing. */
   maxWait: number
-  /** Matches the shared camera transform, plus a small transition buffer. */
-  zoom: number
+  transition: number
+  typeSpeed: number
 }
 
 const TIMING: Record<'default' | 'reduced', IntroTiming> = {
-  // The normal reveal completes in about 3s, with a hard API wait of 2.8s.
-  default: { minHold: 1500, maxWait: 2800, zoom: 1420 },
-  reduced: { minHold: 350, maxWait: 1500, zoom: 300 },
+  default: { maxWait: 5600, transition: 920, typeSpeed: 90 },
+  reduced: { maxWait: 1200, transition: 120, typeSpeed: 0 },
 }
 
 type IntroPhase = 'hold' | 'zoom' | 'done'
 
-/**
- * Cinematic entrance for the public home page.
- *
- * The page mounts behind the veil immediately while `preloadSiteData` starts
- * its cached API requests. Critical data controls when the camera may pull
- * back; a maximum wait keeps a slow request from holding the intro forever.
- */
 export function CinematicIntro({ children }: PropsWithChildren) {
   const [timing] = useState<IntroTiming>(() =>
     window.matchMedia('(prefers-reduced-motion: reduce)').matches ? TIMING.reduced : TIMING.default,
   )
   const [phase, setPhase] = useState<IntroPhase>('hold')
+  const [commandLength, setCommandLength] = useState(timing.typeSpeed === 0 ? COMMAND.length : 0)
+  const [outputCount, setOutputCount] = useState(timing.typeSpeed === 0 ? 5 : 0)
   const [isCriticalDataReady, setIsCriticalDataReady] = useState(false)
+  const [isStartupReady, setIsStartupReady] = useState(timing.typeSpeed === 0)
   const startedAtRef = useRef(0)
 
-  // Start the shared cached requests before the first paint. The portfolio
-  // is already mounted behind the intro veil while the requests are running.
+  // These are the same cached loaders used by the page, so preload joins the
+  // requests made by mounted sections instead of issuing duplicate requests.
   useLayoutEffect(() => {
     let active = true
     startedAtRef.current = performance.now()
     preloadSiteData().then(() => {
-      if (!active) return
-      setIsCriticalDataReady(true)
+      if (active) setIsCriticalDataReady(true)
     })
     return () => {
       active = false
     }
   }, [])
 
-  // Pull back when critical data is ready, but never before the minimum hold
-  // and never after the maximum wait.
+  useEffect(() => {
+    if (timing.typeSpeed === 0) return
+    let typed = 0
+    const interval = window.setInterval(() => {
+      typed += 1
+      setCommandLength(typed)
+      if (typed >= COMMAND.length) {
+        window.clearInterval(interval)
+        const timers = [
+          window.setTimeout(() => setOutputCount(1), 500),
+          window.setTimeout(() => setOutputCount(2), 1000),
+          window.setTimeout(() => setOutputCount(3), 1500),
+          window.setTimeout(() => setOutputCount(4), 2000),
+          window.setTimeout(() => {
+            setOutputCount(5)
+          }, 2500),
+          window.setTimeout(() => setIsStartupReady(true), 3300),
+        ]
+        // Keep the staged output timers scoped to this intro instance.
+        cleanupTimers.current = timers
+      }
+    }, timing.typeSpeed)
+    return () => window.clearInterval(interval)
+  }, [timing.typeSpeed])
+
+  const cleanupTimers = useRef<number[]>([])
+  useEffect(() => () => cleanupTimers.current.forEach(window.clearTimeout), [])
+
+  // Reveal when startup and critical content are ready, with a hard timeout
+  // so an unavailable API never leaves the intro on screen indefinitely.
   useEffect(() => {
     if (phase !== 'hold') return
+    if (isStartupReady && isCriticalDataReady) {
+      setPhase('zoom')
+      return
+    }
     const elapsed = performance.now() - startedAtRef.current
-    const target = isCriticalDataReady ? timing.minHold : timing.maxWait
-    const timer = window.setTimeout(() => setPhase('zoom'), Math.max(target - elapsed, 0))
+    const timer = window.setTimeout(() => setPhase('zoom'), Math.max(timing.maxWait - elapsed, 0))
     return () => window.clearTimeout(timer)
-  }, [phase, isCriticalDataReady, timing])
+  }, [phase, isCriticalDataReady, isStartupReady, timing])
 
-  // Release the page once the camera has settled. The extra 80ms lets the CSS
-  // transition finish first; cleanup clears the timer if the phase changes.
   useEffect(() => {
     if (phase !== 'zoom') return
-    const timer = window.setTimeout(() => setPhase('done'), timing.zoom + 80)
+    const timer = window.setTimeout(() => setPhase('done'), timing.transition)
     return () => window.clearTimeout(timer)
   }, [phase, timing])
 
   const isDone = phase === 'done'
   const isZooming = phase === 'zoom'
+  const output = [
+    ` :: Spring Boot :: (v3.5.0)`,
+    `Starting ${APP_CLASS}...`,
+    'Tomcat initialized...',
+    `Started ${APP_CLASS}`,
+    'Portfolio ready.',
+  ]
 
   return (
     <>
@@ -89,7 +114,24 @@ export function CinematicIntro({ children }: PropsWithChildren) {
         <>
           <div className={`intro-veil${isZooming ? ' is-zooming' : ''}`} aria-hidden="true" />
           <div className={`intro-title-camera${isZooming ? ' is-zooming' : ''}`}>
-            <h1 className={`intro-name${isZooming ? ' is-zooming' : ''}`}>{INTRO_NAME}</h1>
+            <section className={`intro-terminal${isZooming ? ' is-zooming' : ''}`} aria-label={`${DISPLAY_NAME} starting his application`}>
+              <header className="intro-terminal-header">
+                <span className="intro-terminal-title">{DISPLAY_NAME}</span>
+                <span className="intro-terminal-status">Starting application</span>
+              </header>
+              <div className="intro-terminal-body" aria-live="off">
+                <p className="intro-terminal-command">
+                  <span className="intro-terminal-path">C:\Mohammed-Rehan-Jirayat\portfolio&gt;</span>{' '}
+                  <span>{COMMAND.slice(0, commandLength)}</span>
+                  {commandLength < COMMAND.length && <span className="intro-terminal-cursor" aria-hidden="true" />}
+                </p>
+                {output.slice(0, outputCount).map((line, index) => (
+                  <p className={index >= 3 ? 'intro-terminal-success' : 'intro-terminal-output'} key={line}>
+                    {line}
+                  </p>
+                ))}
+              </div>
+            </section>
           </div>
         </>
       )}

@@ -1,22 +1,13 @@
-/* ---------------------------------------------------------------------------
-   Cinematic entrance
-   ---------------------------------------------------------------------------
-   The site and the complete name occupy the same camera space. Their two
-   layers share one transform curve, with the veil between them to reveal the
-   already-mounted page as the camera pulls back.
-*/
-
+/* A quiet terminal sits over the already-mounted portfolio during its reveal. */
 .intro-camera,
 .intro-title-camera,
 .intro-veil {
-  --intro-zoom: 1420ms;
-  --intro-ease: cubic-bezier(0.42, 0, 0.58, 1);
+  --intro-transition: 760ms;
+  --intro-ease: cubic-bezier(0.22, 0.72, 0.24, 1);
 }
 
 .intro-camera,
 .intro-title-camera {
-  --intro-start-transform: translate3d(0, 12px, 0) scale(1.2);
-  --intro-end-transform: translate3d(0, 0, 0) scale(1);
   position: fixed;
   inset: 0;
   transform-origin: 50% 50%;
@@ -30,25 +21,25 @@
   z-index: 2;
   display: grid;
   place-items: center;
-  padding: clamp(1.25rem, 6vw, 5rem);
+  padding: clamp(1rem, 5vw, 4rem);
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .intro-camera,
   .intro-title-camera {
-    transform: var(--intro-start-transform);
-    transition: transform var(--intro-zoom) var(--intro-ease);
+    transform: translate3d(0, 8px, 0) scale(1.035);
+    transition: transform var(--intro-transition) var(--intro-ease);
     will-change: transform;
   }
 
   .intro-camera.is-zooming,
   .intro-title-camera.is-zooming {
-    transform: var(--intro-end-transform);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
-/* Pause section-level Framer Motion entrances during the shared camera move. */
+/* Keep mounted page content settled underneath the intro veil. */
 .intro-camera [style*="opacity"],
 .intro-camera [style*="transform"] {
   opacity: 1 !important;
@@ -60,11 +51,10 @@
   z-index: 1;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 55% at 50% 48%, rgb(87 199 174 / 15%), transparent 68%),
+    radial-gradient(ellipse 72% 58% at 50% 48%, rgb(87 199 174 / 10%), transparent 72%),
     var(--color-canvas);
-  box-shadow: inset 0 0 clamp(6rem, 18vw, 14rem) rgb(0 0 0 / 55%);
   opacity: 1;
-  transition: opacity var(--intro-zoom) var(--intro-ease);
+  transition: opacity var(--intro-transition) var(--intro-ease);
   pointer-events: none;
 }
 
@@ -72,39 +62,108 @@
   opacity: 0;
 }
 
-.intro-name {
-  max-width: 100%;
-  margin: 0;
+.intro-terminal {
+  width: min(100%, 48rem);
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--color-surface, #111916) 96%, black);
+  box-shadow: 0 1.5rem 5rem rgb(0 0 0 / 26%);
   color: var(--color-text);
-  font-size: clamp(1.75rem, 5.6vw, 4.25rem);
-  font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: 0;
-  text-align: center;
-  text-transform: uppercase;
-  text-wrap: balance;
   opacity: 1;
-  filter: blur(0);
-  animation: intro-name-in 760ms cubic-bezier(0.2, 0.75, 0.25, 1) 100ms backwards;
+  transform: translate3d(0, 0, 0) scale(1);
   transition:
-    opacity 480ms ease-in-out 100ms,
-    filter 480ms ease-in-out 100ms;
+    opacity 520ms ease,
+    transform 760ms var(--intro-ease);
 }
 
-.intro-name.is-zooming {
+.intro-terminal.is-zooming {
   opacity: 0;
-  filter: blur(4px);
+  transform: translate3d(0, -12px, 0) scale(0.96);
 }
 
-@keyframes intro-name-in {
-  from {
-    opacity: 0;
-    filter: blur(12px);
+.intro-terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+  background: rgb(255 255 255 / 2%);
+}
+
+.intro-terminal-title {
+  overflow: hidden;
+  color: var(--color-text);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.intro-terminal-status {
+  color: var(--color-text-muted, #9da9a3);
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.intro-terminal-body {
+  min-height: 11rem;
+  padding: clamp(1rem, 3.5vw, 1.65rem);
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+  font-size: clamp(0.67rem, 1.8vw, 0.9rem);
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.intro-terminal-body p {
+  margin: 0;
+}
+
+.intro-terminal-command {
+  color: var(--color-text);
+}
+
+.intro-terminal-path {
+  color: var(--color-accent, #57c7ae);
+}
+
+.intro-terminal-output {
+  color: var(--color-text-muted, #9da9a3);
+}
+
+.intro-terminal-success {
+  color: var(--color-accent, #57c7ae);
+  font-weight: 600;
+}
+
+.intro-terminal-cursor {
+  display: inline-block;
+  width: 0.48rem;
+  height: 1em;
+  margin-left: 0.16rem;
+  background: var(--color-accent, #57c7ae);
+  vertical-align: -0.14em;
+  animation: intro-cursor 900ms steps(2, start) infinite;
+}
+
+@keyframes intro-cursor {
+  to { visibility: hidden; }
+}
+
+@media (max-width: 480px) {
+  .intro-terminal-body {
+    min-height: 10.5rem;
+    padding: 1rem 0.8rem;
+    font-size: 0.66rem;
   }
 
-  to {
-    opacity: 1;
-    filter: blur(0);
+  .intro-terminal-header {
+    padding-inline: 0.8rem;
   }
 }
 
@@ -116,9 +175,12 @@
     will-change: auto;
   }
 
-  .intro-name,
+  .intro-terminal,
   .intro-veil {
+    transition-duration: 120ms;
+  }
+
+  .intro-terminal-cursor {
     animation: none;
-    transition: none;
   }
 }
