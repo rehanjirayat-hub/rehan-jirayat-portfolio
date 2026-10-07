@@ -11,7 +11,7 @@ export const defaultSiteContent: SiteContent = {
   aboutEyebrow: 'About',
   aboutHeading: 'Building toward thoughtful Java backend development.',
   aboutParagraphOne: "I'm Mohammad Rehan Jirayat, an MCA student and Java Backend Developer focused on building practical backend systems with Java, Spring Boot, REST APIs, and database-driven application design.",
-  aboutParagraphTwo: 'My development journey includes Core Java, JDBC, MySQL, layered architecture, Spring Data JPA, Spring Security, testing, and clean backend engineering through hands-on project work.',
+  aboutParagraphTwo: 'My project work includes Core Java, JDBC, MySQL, layered architecture, Spring Data JPA, Spring Security, and JUnit testing.',
   aboutCtaLabel: 'Explore my projects',
   aboutCtaUrl: '#projects',
   contactHeading: 'Contact',
@@ -37,7 +37,7 @@ export const defaultSiteContent: SiteContent = {
 let cachedContent: SiteContent | null = null
 let pendingFetch: Promise<SiteContent> | null = null
 
-function loadSiteContent() {
+export function loadSiteContent() {
   if (cachedContent) return Promise.resolve(cachedContent)
   if (!pendingFetch) {
     pendingFetch = http.get<SiteContent>('/api/site-content').then((response) => {

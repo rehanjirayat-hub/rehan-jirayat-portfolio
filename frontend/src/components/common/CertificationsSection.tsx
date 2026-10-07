@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Loader2, AlertCircle } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 import { fetchCertifications } from '../../services/certifications'
 import type { Certification } from '../../types/education'
 
@@ -20,14 +20,7 @@ export function CertificationsSection() {
   }, [])
 
   if (isLoading) {
-    return (
-      <section className="certifications-content">
-        <div className="certifications-status" role="status">
-          <Loader2 size={24} className="certifications-spinner" aria-hidden="true" />
-          <p>Loading certifications...</p>
-        </div>
-      </section>
-    )
+    return <section className="certifications-content" aria-busy="true" />
   }
 
   if (error) {
@@ -87,9 +80,9 @@ export function CertificationsSection() {
               />
             </svg>
           </div>
-          <h3 className="certifications-empty-title">No certifications added yet.</h3>
+          <h3 className="certifications-empty-title">No certifications listed.</h3>
           <p className="certifications-empty-message">
-            This section is ready for verified certifications when they are available.
+            Certifications will appear here as they are added.
           </p>
         </motion.div>
       </section>

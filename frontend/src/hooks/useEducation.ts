@@ -5,7 +5,7 @@ import type { Education } from '../types/education'
 let cachedEducation: Education[] | null = null
 let pendingFetch: Promise<Education[]> | null = null
 
-async function loadEducation(): Promise<Education[]> {
+export async function loadEducation(): Promise<Education[]> {
   if (cachedEducation) return cachedEducation
   if (pendingFetch) return pendingFetch
 

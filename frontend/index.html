@@ -73,6 +73,15 @@
 
     <!-- Theme color for mobile browsers -->
     <meta name="theme-color" content="#0a1010" />
+
+    <!-- Paint the canvas before the bundled CSS arrives so the cinematic
+         entrance never flashes a light background first. -->
+    <style>
+      html {
+        background: #0a1010;
+        color-scheme: dark;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

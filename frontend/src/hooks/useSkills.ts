@@ -5,7 +5,7 @@ import type { SkillCategory } from '../types/skills'
 let cachedSkills: SkillCategory[] | null = null
 let pendingFetch: Promise<SkillCategory[]> | null = null
 
-async function loadSkills(): Promise<SkillCategory[]> {
+export async function loadSkills(): Promise<SkillCategory[]> {
   if (cachedSkills) return cachedSkills
   if (pendingFetch) return pendingFetch
 

@@ -9,6 +9,7 @@ import { NotFoundPage } from './pages/NotFoundPage'
 import { AdminPage } from './pages/AdminPage'
 import { ExperienceSection } from './pages/ExperienceSection'
 import { useSiteContent } from './hooks/useSiteContent'
+import { CinematicIntro } from './features/intro/CinematicIntro'
 
 /** Only the root path is a valid route for this single-page portfolio. */
 function isValidRoute(pathname: string): boolean {
@@ -42,5 +43,12 @@ export function App() {
     <NotFoundPage />
   )
 
-  return <PublicLayout>{content}</PublicLayout>
+  const layout = <PublicLayout>{content}</PublicLayout>
+
+  // The cinematic entrance only plays for a fresh visit to the home page.
+  // Deep links (/#projects), the admin area and unknown routes go straight to
+  // their content, so back/forward and direct URLs never replay it.
+  const shouldPlayIntro = isValidRoute(window.location.pathname) && window.location.hash === ''
+
+  return shouldPlayIntro ? <CinematicIntro>{layout}</CinematicIntro> : layout
 }

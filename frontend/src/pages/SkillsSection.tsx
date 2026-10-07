@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { Loader2, AlertCircle } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 import { Container } from '../components/common/Container'
 import { SectionHeading } from '../components/common/SectionHeading'
 import { SkillCategoryCard } from '../components/common/SkillCategoryCard'
@@ -25,13 +25,6 @@ export function SkillsSection() {
             titleId="skills-title"
           />
         </motion.div>
-
-        {isLoading && (
-          <div className="projects-status" role="status">
-            <Loader2 size={24} className="projects-spinner" aria-hidden="true" />
-            <p>Loading skills...</p>
-          </div>
-        )}
 
         {error && (
           <div className="projects-status projects-error" role="alert">

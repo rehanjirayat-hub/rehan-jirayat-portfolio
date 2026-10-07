@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
+import { profile as fallbackProfile } from '../data/profile'
 import { http } from '../services/http'
 import type { PortfolioProfile } from '../types/profile'
 
 let cachedProfile: PortfolioProfile | null = null
 let pendingFetch: Promise<PortfolioProfile> | null = null
 
-async function loadProfile(): Promise<PortfolioProfile> {
+export async function loadProfile(): Promise<PortfolioProfile> {
   if (cachedProfile) return cachedProfile
   if (pendingFetch) return pendingFetch
 
@@ -25,22 +26,16 @@ async function loadProfile(): Promise<PortfolioProfile> {
 }
 
 export function useProfile() {
-  const [profile, setProfile] = useState<PortfolioProfile | null>(cachedProfile)
-  const [isLoading, setIsLoading] = useState(!cachedProfile)
-  const [error, setError] = useState<string | null>(null)
+  // Keep the hero and header renderable if the critical API is slower than the
+  // intro's maximum wait. The cached API result replaces this fallback as soon
+  // as it arrives.
+  const [profile, setProfile] = useState<PortfolioProfile>(cachedProfile ?? fallbackProfile)
 
   useEffect(() => {
-    if (cachedProfile) {
-      setProfile(cachedProfile)
-      setIsLoading(false)
-      return
-    }
-
     loadProfile()
       .then(setProfile)
-      .catch(() => setError('Failed to load profile.'))
-      .finally(() => setIsLoading(false))
+      .catch(() => undefined)
   }, [])
 
-  return { profile, isLoading, error }
+  return { profile, isLoading: false, error: null }
 }

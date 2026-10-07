@@ -48,7 +48,7 @@ public class SiteContentService {
                 "Download Resume", "/resume/Mohammad_Rehan_Jirayat_Resume.pdf",
                 "About", "Building toward thoughtful Java backend development.",
                 "I'm Mohammad Rehan Jirayat, an MCA student and Java Backend Developer focused on building practical backend systems with Java, Spring Boot, REST APIs, and database-driven application design.",
-                "My development journey includes Core Java, JDBC, MySQL, layered architecture, Spring Data JPA, Spring Security, testing, and clean backend engineering through hands-on project work.",
+                "My project work includes Core Java, JDBC, MySQL, layered architecture, Spring Data JPA, Spring Security, and JUnit testing.",
                 "Explore my projects", "#projects",
                 "Contact", "Have a question or want to work together? Send me a message and I'll get back to you.",
                 "Mohammad Rehan Jirayat", "Copyright",

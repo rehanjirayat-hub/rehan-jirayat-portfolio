@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Loader2, AlertCircle } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 import { Container } from '../components/common/Container'
 import { SectionHeading } from '../components/common/SectionHeading'
 import { ProjectCard } from '../components/common/ProjectCard'
@@ -40,17 +40,10 @@ export function ProjectsSection() {
           <SectionHeading
             eyebrow="FEATURED WORK"
             title="Featured Projects"
-            description="Practical Java development showcasing backend architecture, database integration, and maintainable code."
+            description="Console-based Java projects built with JDBC, MySQL, and layered architecture."
             titleId="projects-heading"
           />
         </motion.div>
-
-        {isLoading && (
-          <div className="projects-status" role="status">
-            <Loader2 size={24} className="projects-spinner" aria-hidden="true" />
-            <p>Loading projects...</p>
-          </div>
-        )}
 
         {error && (
           <div className="projects-status projects-error" role="alert">

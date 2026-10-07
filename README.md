@@ -1,43 +1,33 @@
 # Mohammad Rehan Jirayat Portfolio
 
-Production-style personal portfolio foundation for a Java Spring Boot Developer.
+Personal portfolio for my Java backend work, projects, skills, and education.
 
-## Repository layout
+## Stack
 
-- `frontend/` - React, TypeScript, Vite, and Tailwind CSS application
-- `backend/` - Java 21 and Spring Boot Maven application
-
-## Local prerequisites
-
-- Node.js 20.19+ or 22.12+
-- npm 10+
-- JDK 21
-- Maven 3.9+
+- Frontend: React, TypeScript, and Vite
+- Backend: Java 21 and Spring Boot
 
 ## Run locally
 
-Frontend:
+Start the backend from `backend/`:
 
 ```powershell
-cd frontend
+mvn spring-boot:run
+```
+
+Start the frontend from `frontend/`:
+
+```powershell
 npm install
 npm run dev
 ```
 
-Backend:
+The frontend uses the backend API for portfolio content. Set `VITE_API_BASE_URL` in `frontend/.env` to the backend URL (for example, `http://localhost:8080`).
+
+## Production build
+
+From `frontend/`:
 
 ```powershell
-cd backend
-mvn spring-boot:run
+npm run build
 ```
-
-The frontend and backend currently contain bootstrap code only. Portfolio pages, APIs, authentication, and database setup are intentionally deferred.
-
-## Frontend organization
-
-- `src/components/` - reusable common, layout, and UI primitives
-- `src/data/` - static, verified navigation metadata
-- `src/layouts/` - page-level layout composition
-- `src/pages/` - route-ready page components
-- `src/services/` - HTTP client configuration, with no endpoints implemented
-- `src/types/` and `src/utils/` - shared TypeScript contracts and helpers

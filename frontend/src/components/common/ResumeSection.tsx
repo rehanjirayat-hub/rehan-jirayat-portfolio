@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Download, Eye } from 'lucide-react'
 import { ButtonLink } from '../ui/Button'
-import { http } from '../../services/http'
-import type { PublicResume } from '../../types/media'
+import { fetchPublicResume } from '../../services/resume'
 
 const RESUME_PATH = '/resume/Mohammad_Rehan_Jirayat_Resume.pdf'
 const RESUME_FILENAME = 'Mohammad_Rehan_Jirayat_Resume.pdf'
@@ -17,13 +16,12 @@ export function ResumeSection() {
 
   useEffect(() => {
     let active = true
-    http
-      .get<PublicResume>('/api/resume')
-      .then((response) => {
+    fetchPublicResume()
+      .then((data) => {
         if (!active) return
-        if (response.data.hasResume && response.data.url) {
-          setResumeUrl(response.data.url)
-          setResumeFilename(response.data.originalFilename ?? RESUME_FILENAME)
+        if (data.hasResume && data.url) {
+          setResumeUrl(data.url)
+          setResumeFilename(data.originalFilename ?? RESUME_FILENAME)
         }
       })
       .catch(() => {

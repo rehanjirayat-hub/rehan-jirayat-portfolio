@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import { Loader2, AlertCircle } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 import { Container } from '../components/common/Container'
 import { SectionHeading } from '../components/common/SectionHeading'
 import { EducationCard } from '../components/common/EducationCard'
@@ -32,13 +32,6 @@ export function EducationSection() {
             titleId="education-heading"
           />
         </motion.div>
-
-        {isLoading && (
-          <div className="education-status" role="status">
-            <Loader2 size={24} className="education-spinner" aria-hidden="true" />
-            <p>Loading education...</p>
-          </div>
-        )}
 
         {error && (
           <div className="education-status education-error" role="alert">
@@ -84,7 +77,7 @@ export function EducationSection() {
             <SectionHeading
               eyebrow="CREDENTIALS"
               title="Certifications"
-              description="Verified certifications will appear here when available."
+              description="Certifications and credentials."
               titleId="certifications-heading"
             />
           </motion.div>
